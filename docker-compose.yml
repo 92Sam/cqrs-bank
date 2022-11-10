@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  mongo-bank:
+    image: 'mongo:6.0.2'
+    restart: always
+    ports:
+      - ${DB_MONGO_PORT}:${DB_MONGO_PORT}
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_MONGO_PASSWORD}
+      - MONGO_INITDB_DATABASE=${DB_MONGO_DATABASE}
+    volumes:
+      - bank_mongo_data:/data/db
+      - bank_mongo_data:/data/configdb
+    networks:
+      - bank_net
+
+  postgres-bank:
+    image: 'postgres:13.5-bullseye'
+    ports:
+      - ${DB_PGSQL_HTTP_PORT}:${DB_PGSQL_HTTP_PORT}
+    environment:
+      - POSTGRES_USER=${DB_PGSQL_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PGSQL_PASSWORD}
+      - POSTGRES_DB=${DB_PGSQL_DATABASE}
+    volumes:
+      - bank_pgsql_data:/etc/postgresql/postgresql.conf
+      - bank_pgsql_data:/var/lib/postgresql/data
+    networks:
+      - bank_net
+
+volumes:
+  bank_mongo_data:
+    driver: local
+  bank_pgsql_data:
+    driver: local
+
+networks:
+  bank_net:
