@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-  zookeeper:
+  zookeeper-bank:
     image: "bitnami/zookeeper:3.8"
     ports:
       - "2181:2181"
@@ -12,7 +12,7 @@ services:
       - ZOO_SERVER_USERS=${ZOO_SERVER_USERS}
       - ZOO_SERVER_PASSWORDS=${ZOO_SERVER_PASSWORDS}
 
-  kafka:
+  kafka-bank:
     image: "bitnami/kafka:3.3"
     ports:
       - "9092:9092"
@@ -26,7 +26,7 @@ services:
       - KAFKA_CLIENT_USERS=${KAFKA_CLIENT_USERS}
       - KAFKA_CLIENT_PASSWORDS=${KAFKA_CLIENT_PASSWORDS}
     depends_on:
-      - zookeeper
+      - zookeeper-bank
 
 volumes:
   bank_zookeeper_data:

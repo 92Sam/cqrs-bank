@@ -5,7 +5,7 @@ services:
     image: 'mongo:6.0.2'
     restart: always
     ports:
-      - ${DB_MONGO_PORT}:${DB_MONGO_PORT}
+      - ${DB_MONGO_PORT}:27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DB_MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_MONGO_PASSWORD}
@@ -19,7 +19,7 @@ services:
   postgres-bank:
     image: 'postgres:13.5-bullseye'
     ports:
-      - ${DB_PGSQL_HTTP_PORT}:${DB_PGSQL_HTTP_PORT}
+      - ${DB_PGSQL_HTTP_PORT}:5432
     environment:
       - POSTGRES_USER=${DB_PGSQL_USERNAME}
       - POSTGRES_PASSWORD=${DB_PGSQL_PASSWORD}

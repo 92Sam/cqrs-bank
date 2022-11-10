@@ -1,0 +1,13 @@
+server:
+    servlet:
+        context-path: /api/v1
+spring:
+    data:
+        mongodb:
+            database: ${DB_PGSQL_DATABASE:bank_service}
+            uri: mongodb://${DB_MONGO_USERNAME:mongoroot}:${DB_MONGO_PASSWORD:mongoroot_pass}@${DB_MONGO_HOST:127.0.0.1}:${DB_MONGO_PORT:27017}
+    datasource:
+        url: jdbc:postgresql://${DB_PGSQL_HOST:localhost}:${DB_PGSQL_HTTP_PORT:5433}/${DB_PGSQL_DATABASE:bank_service}
+        username: ${DB_PGSQL_USERNAME:root}
+        password: ${DB_PGSQL_PASSWORD:root123456}
+        driver-class-name: org.postgresql.Driver

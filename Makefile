@@ -1,6 +1,6 @@
 include .env
 
-run-service:
+run_service:
 	mvn spring-boot:run
 
 clean:
