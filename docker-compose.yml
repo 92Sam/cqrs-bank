@@ -1,6 +1,21 @@
 version: "3.8"
 
 services:
+  cqrs-bank-service:
+    image: "cqrs-bank-service-v1"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mongo-bank
+      - postgres-bank
+      - zookeeper-bank
+      - kafka-bank
+    networks:
+      - bank_net
+
   mongo-bank:
     image: 'mongo:6.0.2'
     restart: always

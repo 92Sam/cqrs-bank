@@ -21,10 +21,8 @@ public class SimpleCORSFilter extends WebSecurityConfigurerAdapter {
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList(
                 HttpMethod.POST.name()
-                , HttpMethod.GET.name()
-                , HttpMethod.PUT.name()
-                , HttpMethod.PATCH.name()
-                , HttpMethod.DELETE.name()
+                ,HttpMethod.GET.name()
+                ,HttpMethod.OPTIONS.name()
         ));
         configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
         configuration.setAllowedHeaders(
@@ -36,6 +34,7 @@ public class SimpleCORSFilter extends WebSecurityConfigurerAdapter {
         );
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/graphql", configuration);
         return source;
     }
 

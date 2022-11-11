@@ -7,23 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
 
 import java.util.Collections;
 import java.util.List;
 
-@RestController
-@RequestMapping(path = "transactions")
+@Controller
 public class TransactionResolverQuery {
     @Autowired
     private TransactionQueryServiceImpl transactionServiceImpl;
 
-    //Http Get method to get the transaction list in JSON format
-    @GetMapping(produces="application/json")
+    @QueryMapping
     public  ResponseEntity<Page<List<TransactionResDTO>>> getTransactionList()
     {
-
+        System.out.println("Execution Here");
         List<TransactionResDTO> transactions = transactionServiceImpl.getTransactionList();
         Page<List<TransactionResDTO>> pagination = new PageImpl<List<TransactionResDTO>>(
                 Collections.singletonList(transactions),

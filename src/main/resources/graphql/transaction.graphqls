@@ -1,0 +1,20 @@
+type Transaction {
+    id: ID!
+    amount: Float,
+    title: String,
+    description: String
+}
+
+input TransactionInput {
+    amount: Float,
+    title: String,
+    description: String
+}
+
+type Query {
+    getTransactionList: [Transaction]
+}
+
+type Mutation {
+    addTransaction(input: TransactionInput): Transaction
+}
