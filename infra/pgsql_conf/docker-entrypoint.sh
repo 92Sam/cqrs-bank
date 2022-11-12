@@ -249,7 +249,7 @@ pg_setup_hba_conf() {
 # all arguments will be passed along as arguments to `postgres` (via pg_ctl)
 docker_temp_server_start() {
 	if [ "$1" = 'postgres' ]; then
-	  ECHO "Start Server Postgres /*********************"
+	    echo "Start Server Postgres /*********************"
 		shift
 	fi
 
@@ -262,15 +262,6 @@ docker_temp_server_start() {
 		-o "$(printf '%q ' "$@")" \
 		-w start
 
-}
-
-docker_enable_extensions() {
-  psql=( docker_process_sql )
-
-  echo "Execute enable_extensions"
-  psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"
-  CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-  echo "End Execute enable_extensions"
 }
 
 # stop postgresql server after done setting up user and running scripts
@@ -301,9 +292,7 @@ _main() {
 	if [ "${1:0:1}" = '-' ]; then
 		set -- postgres "$@"
 	fi
-
-	echo "DATABASE $DATABASE_ALREADY_EXISTS"
-
+	
 	if [ "$1" = 'postgres' ] && ! _pg_want_help "$@"; then
 		docker_setup_env
 		# setup data directories and permissions (when run as root)
@@ -346,24 +335,14 @@ _main() {
 			echo
 		fi
 	fi
-	#/bin/bash -c nohup postgres & && echo "Execution Postgres  docker_enable_extensions"
-	#/bin/bash -c "nohup postgres > /tmp/postgres.out &"
 	# Run postgress with nohup and execute script afterwards
-	#nohup /bin/bash -c 'postgres && echo test' > /tmp/output.txt
-	# Read output
-	#cat /tmp/output.txt
+	echo 'Applying Postgres Extensions'
+	nohup postgres > /tmp/postgres.out &/usr/local/bin/enable-extensions.sh
+
 	# Run postgres normally
-	# Command working 
-	# nohup sleep 3 > /tmp/nohup.out & ls -l
-	#
-	echo "Executing "
-	#nohup sleep 3 > /tmp/nohup.out & ls -l
-	nohup postgres > /tmp/nohup.out ; ls -l
-	#exec $@
+	exec "$@"
 }
 
 if ! _is_sourced; then
-	echo "IS SOURCE"
 	_main "$@"
 fi
-

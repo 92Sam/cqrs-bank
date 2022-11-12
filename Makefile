@@ -20,3 +20,6 @@ containers_down:
 
 show:
 	echo ${ENV_FILE_PATH}
+
+removing-images-test:
+	docker images | grep "none" | awk '{print $3}' | xargs docker rmi
