@@ -1,37 +1,28 @@
-version: "3.8"
-
+version: '3'
 services:
   zookeeper-bank:
-    image: "bitnami/zookeeper:3.8"
+    image: confluentinc/cp-zookeeper:7.0.1
     ports:
       - "2181:2181"
-    volumes:
-      - "bank_zookeeper_data:/bitnami"
     environment:
-      - ZOO_ENABLE_AUTH=${ZOO_ENABLE_AUTH}
-      - ZOO_SERVER_USERS=${ZOO_SERVER_USERS}
-      - ZOO_SERVER_PASSWORDS=${ZOO_SERVER_PASSWORDS}
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_CLIENT_PORT: 2181
 
-  kafka-bank:
-    image: "bitnami/kafka:3.3"
+  broker-bank:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: broker
     ports:
       - "9092:9092"
-      - "29092:29092"
-    volumes:
-      - "bank_kafka_data:/bitnami"
-    environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=${KAFKA_CFG_ZOOKEEPER_CONNECT}
-      - ALLOW_PLAINTEXT_LISTENER=${ALLOW_PLAINTEXT_LISTENER}
-      - KAFKA_ZOOKEEPER_USER=${KAFKA_ZOOKEEPER_USER}
-      - KAFKA_ZOOKEEPER_PASSWORD=${KAFKA_ZOOKEEPER_PASSWORD}
-      - KAFKA_CLIENT_USERS=${KAFKA_CLIENT_USERS}
-      - KAFKA_CLIENT_PASSWORDS=${KAFKA_CLIENT_PASSWORDS}
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,EXTERNALPLAINTEXT://:29092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNALPLAINTEXT://localhost:29092
-      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,EXTERNALPLAINTEXT:PLAINTEXT
-      - KAFKA_INTER_BROKER_LISTENER_NAME=EXTERNALPLAINTEXT
     depends_on:
       - zookeeper-bank
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: ${KAFKA_CFG_ZOOKEEPER_CONNECT}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
 volumes:
   bank_zookeeper_data:
