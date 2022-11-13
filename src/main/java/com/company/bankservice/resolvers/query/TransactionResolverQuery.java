@@ -3,6 +3,8 @@ package com.company.bankservice.resolvers.query;
 import com.company.bankservice.dto.TransactionReqDTO;
 import com.company.bankservice.dto.TransactionResDTO;
 import com.company.bankservice.services.impl.TransactionQueryServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,6 +21,8 @@ public class TransactionResolverQuery {
     @Autowired
     private TransactionQueryServiceImpl transactionServiceImpl;
 
+    private static Logger log = LogManager.getLogger(TransactionResolverQuery.class);
+
     @QueryMapping
     public  ResponseEntity<Page<List<TransactionResDTO>>> getTransactionList()
     {
@@ -28,6 +32,9 @@ public class TransactionResolverQuery {
                 Collections.singletonList(transactions),
                 PageRequest.of(1, 2),
                 10);
+
+        log.info(pagination);
+
         return ResponseEntity.ok(pagination);
     }
 

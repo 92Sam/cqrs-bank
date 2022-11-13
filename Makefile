@@ -9,14 +9,18 @@ clean:
 run_containers:
 	docker-compose \
 	--env-file ${ENV_FILE_PATH} \
-	-f ${PWD}/docker-compose.yml \
-	-f ${PWD}/docker-compose-broker.yml up -d
+	-f ${PWD}/docker-compose-broker.yml \
+	-f ${PWD}/docker-compose.yml up -d
 
 containers_down:
 	docker-compose \
 	--env-file ${ENV_FILE_PATH} \
-	-f ${PWD}/docker-compose.yml \
-	-f ${PWD}/docker-compose-broker.yml down
+	-f ${PWD}/docker-compose-broker.yml \
+	-f ${PWD}/docker-compose.yml down
+
+containers_restart: \
+	containers_down \
+	run_containers \
 
 show:
 	echo ${ENV_FILE_PATH}
