@@ -4,6 +4,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.company.bankservice.entities.User;
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.config.SslConfigs;
@@ -38,6 +39,16 @@ public class KafkaProducerConfig {
     @Bean
     public KafkaTemplate<String, Transaction> sinkTemplate() {
         return new KafkaTemplate<>(sinkProducerFactory());
+    }
+
+    @Bean
+    public ProducerFactory<String, User> userProducerFactory() {
+        return new DefaultKafkaProducerFactory<>(configProps());
+    }
+
+    @Bean
+    public KafkaTemplate<String, User> userTemplate() {
+        return new KafkaTemplate<String, User>(userProducerFactory());
     }
 
     /**

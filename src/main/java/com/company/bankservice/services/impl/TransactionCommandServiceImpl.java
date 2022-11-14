@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @Service
 public class TransactionCommandServiceImpl implements TransactionCommandService {
 
-//    private TransactionPostgresRepository transactionPostgresRepository;
     @Autowired
     private TransactionMongoRepository transactionMongoRepository;
 

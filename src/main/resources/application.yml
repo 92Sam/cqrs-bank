@@ -1,10 +1,6 @@
-#
-#
-#- KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:29092
-#- KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:29092
-#- KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
-#- KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
-#
+server:
+    servlet:
+        context-path: "/api/v1"
 
 app:
     config:
@@ -22,9 +18,6 @@ app:
             retries: 10
             request:
                 timeout: 5000
-server:
-    servlet:
-        context-path: /api/v1
 
 spring:
     data:

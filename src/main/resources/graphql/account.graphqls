@@ -1,0 +1,25 @@
+#import "./user.graphqls"
+#import "./common.graphqls"
+
+type Account implements CommonDateType {
+    user: User
+    accountNumber: String
+    currency: Currency
+    balance: Float!
+    statusAccount: AccountStatus
+    createdAt: String
+    updatedAt: String
+}
+
+input InputAccount {
+    userId: ID!
+    accountNumber: String!
+    currency: Currency!
+    balance: Float!
+}
+
+input InputUpdateStatusAccount {
+    accountId: ID!
+    statusAccount: AccountStatus
+}
+

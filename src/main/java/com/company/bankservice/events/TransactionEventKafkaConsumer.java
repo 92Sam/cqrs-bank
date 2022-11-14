@@ -18,7 +18,7 @@ public class TransactionEventKafkaConsumer {
     @KafkaListener(
             topics = "${app.config.kafka.topics.transactions}",
             groupId = "${app.config.kafka.group}",
-            containerFactory = "sinkListenerContainerFactory"
+            containerFactory = "transactionListenerContainerFactory"
     )
     public void listen(@Payload Transaction message, Acknowledgment acknowledgment) {
         if ( message == null ) return;
