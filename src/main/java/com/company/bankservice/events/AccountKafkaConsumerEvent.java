@@ -1,6 +1,6 @@
 package com.company.bankservice.events;
 
-import com.company.bankservice.entities.Transaction;
+import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
 import com.company.bankservice.entities.User;
 import com.company.bankservice.services.impl.AccountCommandServiceImpl;
 import org.apache.logging.log4j.LogManager;
@@ -14,23 +14,23 @@ import org.springframework.stereotype.Service;
 
 @EnableKafka
 @Service
-public class AccountEventKafkaConsumer {
+public class AccountKafkaConsumerEvent {
 
     @Autowired
     AccountCommandServiceImpl accountCommandServiceImpl;
 
-    Logger log = LogManager.getLogger(AccountEventKafkaConsumer.class);
+    Logger log = LogManager.getLogger(AccountKafkaConsumerEvent.class);
 
     @KafkaListener(
             topics = "${app.config.kafka.topics.users}",
             groupId = "${app.config.kafka.group}",
             containerFactory = "userListenerContainerFactory"
     )
-    public void listen(@Payload User message, Acknowledgment acknowledgment) {
+    public void listen(@Payload UserCreateEventMessageDTO message, Acknowledgment acknowledgment) {
         if ( message == null ) return;
-        log.info("[User] Message: {}", message.getId());
+        log.info("[User] Message: {}", message.getUserId());
         try {
-            accountCommandServiceImpl.createFromBroker(message);
+            accountCommandServiceImpl.createAccountFromBroker(message);
             acknowledgment.acknowledge();
         } catch (Exception e) {
             log.error("[User][Exception] Error on Message.", e);

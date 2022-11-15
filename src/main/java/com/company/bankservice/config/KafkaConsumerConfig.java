@@ -4,6 +4,8 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
+import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.User;
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -61,19 +63,35 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-    public ConsumerFactory<String, User> userConsumerFactory() {
-        JsonDeserializer<User> deserializer = new JsonDeserializer<>(User.class, false);
+    public ConsumerFactory<String, UserCreateEventMessageDTO> userConsumerFactory() {
+        JsonDeserializer<UserCreateEventMessageDTO> deserializer = new JsonDeserializer<>(UserCreateEventMessageDTO.class, false);
         deserializer.addTrustedPackages("*");
         return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), deserializer);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, User> userListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, User> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, UserCreateEventMessageDTO> userListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, UserCreateEventMessageDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConcurrency(10);
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
         factory.getContainerProperties().setSyncCommits(true);
         factory.setConsumerFactory(userConsumerFactory());
+        return factory;
+    }
+
+    public ConsumerFactory<String, Account> accountConsumerFactory() {
+        JsonDeserializer<Account> deserializer = new JsonDeserializer<>(Account.class, false);
+        deserializer.addTrustedPackages("*");
+        return new DefaultKafkaConsumerFactory<>(configProps(), new StringDeserializer(), deserializer);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, Account> accountListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Account> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConcurrency(10);
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
+        factory.getContainerProperties().setSyncCommits(true);
+        factory.setConsumerFactory(accountConsumerFactory());
         return factory;
     }
 }

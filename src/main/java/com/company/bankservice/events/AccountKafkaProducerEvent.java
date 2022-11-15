@@ -1,5 +1,6 @@
 package com.company.bankservice.events;
 
+import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
 import org.apache.kafka.common.KafkaException;
 import org.apache.logging.log4j.LogManager;
@@ -9,29 +10,29 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-@Component
-public class TransactionEventKafkaProducer {
+@Service
+public class AccountKafkaProducerEvent {
 
     @Autowired
-    @Qualifier("sinkTemplate")
-    private KafkaTemplate<String, Transaction> kafkaTemplate;
+    @Qualifier("accountTemplate")
+    private KafkaTemplate<String, Account> kafkaTemplate;
 
-    private static Logger log = LogManager.getLogger(TransactionEventKafkaProducer.class);
+    private static Logger log = LogManager.getLogger(AccountKafkaProducerEvent.class);
 
-    @Value(value = "${app.config.kafka.topics.transactions}")
+    @Value(value = "${app.config.kafka.topics.accounts}")
     private String topic;
 
-    public boolean sendMessage(Transaction transactionMsg) {
+    public boolean sendMessage(Account accountMsg) {
         try {
-            ListenableFuture<SendResult<String, Transaction>> future = kafkaTemplate.send(topic, transactionMsg);
+            ListenableFuture<SendResult<String, Account>> future = kafkaTemplate.send(topic, accountMsg);
 
-            future.addCallback(new ListenableFutureCallback<SendResult<String, Transaction>>() {
+            future.addCallback(new ListenableFutureCallback<SendResult<String, Account>>() {
                 @Override
-                public void onSuccess(SendResult<String, Transaction> result) {
+                public void onSuccess(SendResult<String, Account> result) {
                     log.info("[send] Mensaje inyectado OK.");
                 }
 

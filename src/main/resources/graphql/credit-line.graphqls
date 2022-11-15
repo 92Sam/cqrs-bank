@@ -1,0 +1,17 @@
+type CreditLine implements CommonDateType {
+    id: ID!
+    name: String!
+    description: String!
+    currency: Currency!
+    amount: Float!
+    createdAt: String
+    updatedAt: String
+}
+
+input InputCreditLine {
+    id: ID!
+    name: String!
+    description: String!
+    currency: Currency!
+    amount: Float!
+}

@@ -1,6 +1,6 @@
 package com.company.bankservice.events;
 
-import com.company.bankservice.entities.Transaction;
+import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
 import com.company.bankservice.entities.User;
 import org.apache.kafka.common.KafkaException;
 import org.apache.logging.log4j.LogManager;
@@ -15,24 +15,24 @@ import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
 @Component
-public class UserEventKafkaProducer {
+public class UserKafkaProducerEvent {
 
     @Autowired
     @Qualifier("userTemplate")
-    private KafkaTemplate<String, User> kafkaTemplate;
+    private KafkaTemplate<String, UserCreateEventMessageDTO> kafkaTemplate;
 
-    private static Logger log = LogManager.getLogger(UserEventKafkaProducer.class);
+    private static Logger log = LogManager.getLogger(UserKafkaProducerEvent.class);
 
     @Value(value = "${app.config.kafka.topics.users}")
     private String topic;
 
-    public boolean sendMessage(User transactionMsg) {
+    public boolean sendMessage(UserCreateEventMessageDTO transactionMsg) {
         try {
-            ListenableFuture<SendResult<String, User>> future = kafkaTemplate.send(topic, transactionMsg);
+            ListenableFuture<SendResult<String, UserCreateEventMessageDTO>> future = kafkaTemplate.send(topic, transactionMsg);
 
-            future.addCallback(new ListenableFutureCallback<SendResult<String, User>>() {
+            future.addCallback(new ListenableFutureCallback<SendResult<String, UserCreateEventMessageDTO>>() {
                 @Override
-                public void onSuccess(SendResult<String, User> result) {
+                public void onSuccess(SendResult<String, UserCreateEventMessageDTO> result) {
                     log.info("[send] Mensaje inyectado OK.");
                 }
 

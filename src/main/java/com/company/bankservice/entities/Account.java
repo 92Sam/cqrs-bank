@@ -1,15 +1,19 @@
 package com.company.bankservice.entities;
 
 import com.company.bankservice.enums.AccountStatus;
+import com.company.bankservice.enums.CreditLine;
 import com.company.bankservice.enums.Currency;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -22,7 +26,10 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_ID")
-    private User user;
+    private String userId;
+
+    @Enumerated
+    private CreditLine creditLineId;
 
     private String accountNumber;
 
@@ -31,11 +38,16 @@ public class Account {
 
     private Float balance;
 
+    private Float creditAvailable;
+
+    private Float creditAmount;
+
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
-    @CreatedDate
-    private Date createdAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

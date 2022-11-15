@@ -4,6 +4,8 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
+import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.User;
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -26,36 +28,41 @@ import com.company.bankservice.entities.Transaction;
 public class KafkaProducerConfig {
 
     /**
-     * Acceso a variables de ambiente.
+     * Enviroment
      */
     @Autowired
     private Environment env;
 
     @Bean
-    public ProducerFactory<String, Transaction> sinkProducerFactory() {
+    public ProducerFactory<String, Transaction> transactionAccountProducerFactory() {
         return new DefaultKafkaProducerFactory<>(configProps());
     }
 
     @Bean
-    public KafkaTemplate<String, Transaction> sinkTemplate() {
-        return new KafkaTemplate<>(sinkProducerFactory());
+    public KafkaTemplate<String, Transaction> transactionAccountTemplate() {
+        return new KafkaTemplate<>(transactionAccountProducerFactory());
     }
 
     @Bean
-    public ProducerFactory<String, User> userProducerFactory() {
+    public ProducerFactory<String, UserCreateEventMessageDTO> userProducerFactory() {
         return new DefaultKafkaProducerFactory<>(configProps());
     }
 
     @Bean
-    public KafkaTemplate<String, User> userTemplate() {
-        return new KafkaTemplate<String, User>(userProducerFactory());
+    public KafkaTemplate<String, UserCreateEventMessageDTO> userTemplate() {
+        return new KafkaTemplate<String, UserCreateEventMessageDTO>(userProducerFactory());
     }
 
-    /**
-     * Genera los valores de configuracion para inyectar mensajes en el topico kafka.
-     *
-     * @return Mapa con valores de configuracion.
-     */
+    @Bean
+    public ProducerFactory<String, Account> accountProducerFactory() {
+        return new DefaultKafkaProducerFactory<>(configProps());
+    }
+
+    @Bean
+    public KafkaTemplate<String, Account> accountTemplate() {
+        return new KafkaTemplate<String, Account>(accountProducerFactory());
+    }
+
     private Map<String, Object> configProps() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, env.getProperty("app.config.kafka.server"));

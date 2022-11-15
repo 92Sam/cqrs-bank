@@ -19,3 +19,15 @@ input UserInput {
     name: String
     password: String
 }
+
+input UserAccountInput {
+    email: String
+    name: String
+    password: String
+    initialDeposit: InputInitialDepositAccount!
+}
+
+input InputInitialDepositAccount {
+    currency: Currency!
+    amount: Float!
+}

@@ -1,6 +1,13 @@
+enum TransactionType {
+    CREDIT
+    DEBIT
+    DEPOSIT
+}
+
 type Transaction implements CommonDateType{
     id: ID!
-    accountID: ID!
+    accountId: ID!
+    transactionType: TransactionType!
     amount: Float
     title: String
     description: String
@@ -9,7 +16,20 @@ type Transaction implements CommonDateType{
 }
 
 input TransactionInput {
+    accountId: ID!
+    transactionType: TransactionType!
     amount: Float
     title: String
     description: String
+}
+
+input TransactionsHistoricInput {
+    dateFrom: String!
+    dateTo: String!
+}
+
+input TransactionsAccountHistoricInput {
+    accountId: ID!
+    dateFrom: String!
+    dateTo: String!
 }

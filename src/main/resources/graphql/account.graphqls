@@ -2,10 +2,13 @@
 #import "./common.graphqls"
 
 type Account implements CommonDateType {
+    id: ID!
     user: User
+    creditLine: CreditLine!
     accountNumber: String
     currency: Currency
     balance: Float!
+    creditAvailable: Float!
     statusAccount: AccountStatus
     createdAt: String
     updatedAt: String
