@@ -17,6 +17,6 @@ public class TransactionResDTO {
     private Float amount;
     private String title;
     private String description;
-    private Date createAt;
+    private Date createdAt;
     private Date updatedAt;
 }

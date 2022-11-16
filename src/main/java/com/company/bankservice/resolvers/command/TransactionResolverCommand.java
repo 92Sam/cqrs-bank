@@ -15,10 +15,8 @@ public class TransactionResolverCommand {
     private TransactionCommandServiceImpl transactionCommandServiceImpl;
 
     @MutationMapping()
-    public ResponseEntity<TransactionResDTO> addTransaction(@Argument("input") TransactionReqDTO transactionInputReq)
+    public TransactionResDTO addTransaction(@Argument("input") TransactionReqDTO transactionInputReq)
     {
-        TransactionResDTO transactionResDTO = transactionCommandServiceImpl.create(transactionInputReq);
-
-        return ResponseEntity.ok(transactionResDTO);
+        return transactionCommandServiceImpl.create(transactionInputReq);
     }
 }

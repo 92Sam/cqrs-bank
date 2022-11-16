@@ -8,6 +8,7 @@ import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.events.UserKafkaProducerEvent;
 import com.company.bankservice.repositories.UserMongoRepository;
 import com.company.bankservice.services.UserCommandService;
+import com.company.utils.EncryptUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class UserCommandServiceImpl implements UserCommandService {
             log.info(userReqDTO);
             User user = new User();
             user.setEmail(userReqDTO.getEmail());
-            user.setPassword(userReqDTO.getPassword());
+            user.setPassword(EncryptUtils.hashBCrypt(userReqDTO.getPassword()));
             user.setEmail(userReqDTO.getEmail());
             user.setUserStatus(UserStatus.ENABLED);
             user.setCreatedAt(new Date());

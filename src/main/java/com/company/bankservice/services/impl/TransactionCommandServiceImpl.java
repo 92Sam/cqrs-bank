@@ -27,9 +27,6 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     private TransactionMongoRepository transactionMongoRepository;
 
     @Autowired
-    private AccountMongoRepository accountMongoRepository;
-
-    @Autowired
     private AccountCommandServiceImpl accountCommandServiceImpl;
 
     @Autowired
@@ -40,29 +37,22 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     @Override
     public TransactionResDTO create(TransactionReqDTO transactionReq) {
 
-        Optional<Account> account = accountMongoRepository.findById(transactionReq.getAccountId());
-        if (!account.isPresent()){
-            log.info("Error the account not exist ");
-            return null;
-        }
-
-        TransactionResDTO transactionResDTO = new TransactionResDTO();
-        Float totalAvailable = account.get().getBalance()+account.get().getCreditAvailable();
-        if(totalAvailable<transactionReq.getAmount()) {
-            log.info("Account No available Balance->{}", account.get().getId());
-            return transactionResDTO;
-        }
-
         Transaction transaction = new Transaction();
-        transaction.setAccountId(account.get().getId());
+        transaction.setAccountId(transactionReq.getAccountId());
         transaction.setAmount(transactionReq.getAmount());
         transaction.setTransactionTypeByAmount(transactionReq.getAmount());
         transaction.setTitle("Init Deposit Account");
         transaction.setDescription(transactionReq.getDescription().orElse(null));
         transaction.setCreatedAt(new Date());
 
-        transaction = transactionMongoRepository.save(transaction);
+        Account account = accountCommandServiceImpl.updateAccountBalanceByTransaction(transaction);
+        TransactionResDTO transactionResDTO = new TransactionResDTO();
 
+        transaction = transactionMongoRepository.save(transaction);
+//
+        transactionResDTO.setAccountId(transaction.getAccountId());
+        transactionResDTO.setTransactionType(transaction.getTransactionType());
+        transactionResDTO.setCreatedAt(transaction.getCreatedAt());
         transactionResDTO.setAmount(transaction.getAmount());
         if (transaction.getTitle() != null){
             transactionResDTO.setTitle(transaction.getTitle());

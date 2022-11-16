@@ -13,9 +13,12 @@ import java.util.List;
 @Repository
 public interface AccountMongoRepository extends MongoRepository<Account, String> {
 
-    @Query("{'userId' : ?1, 'currency' : ?2}")
+    @Query("{'userId' : ?0, 'currency' : ?1}")
     Account findAccountByUserIdByCurrency(String userId, Currency currency);
 
-    @Query("{'userId' : ?1}")
+    @Query("{'userId' : {'$eq': ?0 }}")
     List<Account> findAccountByUserId(String userId);
+
+    @Query("{'balance' : {'$lt': 0 }}")
+    List<Account> getAccountsOverdraft();
 }

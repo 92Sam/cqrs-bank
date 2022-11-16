@@ -8,11 +8,9 @@ import com.company.bankservice.repositories.TransactionMongoRepository;
 import com.company.bankservice.services.TransactionQueryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.internal.LogManagerStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +36,7 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
                 transactionResDTO.setId(transaction.getId());
                 transactionResDTO.setTransactionType(transaction.getTransactionType());
                 transactionResDTO.setAccountId(transaction.getAccountId());
-                transactionResDTO.setCreateAt(transaction.getCreatedAt());
+                transactionResDTO.setCreatedAt(transaction.getCreatedAt());
                 transactionResDTO.setAmount(transaction.getAmount());
                 if (transaction.getDescription() != null) {
                     transactionResDTO.setTitle(transaction.getTitle());
@@ -73,7 +71,7 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
                 transactionResDTO.setId(transaction.getId());
                 transactionResDTO.setTransactionType(transaction.getTransactionType());
                 transactionResDTO.setAccountId(transaction.getAccountId());
-                transactionResDTO.setCreateAt(transaction.getCreatedAt());
+                transactionResDTO.setCreatedAt(transaction.getCreatedAt());
                 transactionResDTO.setAmount(transaction.getAmount());
                 if (transaction.getDescription() != null) {
                     transactionResDTO.setTitle(transaction.getTitle());
@@ -107,7 +105,7 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
                 transactionResDTO.setId(transaction.getId());
                 transactionResDTO.setTransactionType(transaction.getTransactionType());
                 transactionResDTO.setAccountId(transaction.getAccountId());
-                transactionResDTO.setCreateAt(transaction.getCreatedAt());
+                transactionResDTO.setCreatedAt(transaction.getCreatedAt());
                 transactionResDTO.setAmount(transaction.getAmount());
                 if (transaction.getDescription() != null) {
                     transactionResDTO.setTitle(transaction.getTitle());

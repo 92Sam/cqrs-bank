@@ -28,21 +28,17 @@ public class TransactionResolverQuery {
     private static Logger log = LogManager.getLogger(TransactionResolverQuery.class);
 
     @QueryMapping
-    public  List<TransactionResDTO> getTransactionList()
-    {
-        List<TransactionResDTO> transactions = transactionServiceImpl.getTransactionList();
-        return transactions;
+    public  List<TransactionResDTO> getTransactionList() {
+        return transactionServiceImpl.getTransactionList();
     }
 
     @QueryMapping
     public List<TransactionResDTO> getTransactionsByDateRange(@Argument("input") TransactionsHistoricReqDTO transactionsHistoricReqDTO) {
-        List<TransactionResDTO> transactions = transactionServiceImpl.getTransactionsByDateRange(transactionsHistoricReqDTO);
-        return transactions;
+        return transactionServiceImpl.getTransactionsByDateRange(transactionsHistoricReqDTO);
     }
 
     @QueryMapping
     public List<TransactionResDTO> getTransactionsByAccountIdByDateRange(@Argument("input") TransactionsAccountHistoricReqDTO transactionsAccountHistoricReqDTO) {
-        List<TransactionResDTO> transactions = transactionServiceImpl.getTransactionsByAccountIdByDateRange(transactionsAccountHistoricReqDTO);
-        return transactions;
+        return transactionServiceImpl.getTransactionsByAccountIdByDateRange(transactionsAccountHistoricReqDTO);
     }
 }
