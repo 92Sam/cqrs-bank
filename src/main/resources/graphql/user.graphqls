@@ -14,6 +14,21 @@ type User {
     updatedAt: String
 }
 
+# DTOS Responses
+type UserLogin {
+    id: ID!
+    token: String!
+}
+
+type UserRes {
+    id: ID!
+    name: String!
+    email:String!
+    userStatus: UserStatus!
+    createDate: String!
+}
+
+# DTOS Requests
 input UserInput {
     email: String
     name: String

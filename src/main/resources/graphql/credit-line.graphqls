@@ -8,6 +8,7 @@ type CreditLine implements CommonDateType {
     updatedAt: String
 }
 
+# DTOS Requests
 input InputCreditLine {
     id: ID!
     name: String!

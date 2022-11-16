@@ -1,5 +1,9 @@
 package com.company.bankservice.services;
 
-public interface UserQueryService {
+import com.company.bankservice.dto.resolvers.UserLoginReqDTO;
+import com.company.bankservice.dto.resolvers.UserLoginResDTO;
+import com.company.bankservice.entities.User;
 
+public interface UserQueryService {
+    UserLoginResDTO login(String email, String password);
 }

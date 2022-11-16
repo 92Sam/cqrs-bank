@@ -15,13 +15,13 @@ type Mutation {
 
 type Query {
     #Query Users
-    login(email: String!, password: String!): User!
+    login(email: String!, password: String!): UserLogin!
     getUser(input: UserInput!): User!
     getUsers(input: UserInput!): [User]
 
     #Query Accounts
-    getAccountsUser(userId: ID!): [Account]
-    getAccountsOverdraft:[Account]
+    getAccountsUser(userId: ID!): [UserRes]
+    getAccountsOverdraft:[UserRes]
 
     #Query Transactions
     getTransactionList: [Transaction]

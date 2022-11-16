@@ -15,6 +15,7 @@ type Transaction implements CommonDateType{
     updatedAt: String
 }
 
+# DTOS Requests
 input TransactionInput {
     accountId: ID!
     transactionType: TransactionType!

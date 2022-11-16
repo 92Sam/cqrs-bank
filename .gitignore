@@ -23,4 +23,8 @@ target/
 .vscode/
 .DS_Store
 
+# Common files
 src/main/.DS_Store
+.env
+src/main/resources/application.yml
+pom.xml

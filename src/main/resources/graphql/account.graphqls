@@ -14,6 +14,7 @@ type Account implements CommonDateType {
     updatedAt: String
 }
 
+# DTOS Requests
 input InputAccount {
     userId: ID!
     accountNumber: String!
