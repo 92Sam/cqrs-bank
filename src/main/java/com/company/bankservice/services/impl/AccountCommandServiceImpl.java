@@ -9,7 +9,7 @@ import com.company.bankservice.enums.Currency;
 import com.company.bankservice.events.AccountKafkaProducerEvent;
 import com.company.bankservice.repositories.AccountMongoRepository;
 import com.company.bankservice.services.AccountCommandService;
-import com.company.utils.AccountUtils;
+import com.company.bankservice.utils.AccountUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

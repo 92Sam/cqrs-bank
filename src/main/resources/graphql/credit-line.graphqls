@@ -1,3 +1,7 @@
+enum ECreditLine{
+    CREDIT_BASIC
+}
+
 type CreditLine implements CommonDateType {
     id: ID!
     name: String!

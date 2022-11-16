@@ -1,4 +1,4 @@
-package com.company.utils;
+package com.company.bankservice.utils;
 
 import java.security.SecureRandom;
 import java.util.Base64;

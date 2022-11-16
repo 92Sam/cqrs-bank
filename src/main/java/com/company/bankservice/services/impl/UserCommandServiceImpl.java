@@ -10,7 +10,7 @@ import com.company.bankservice.enums.errors.UserError;
 import com.company.bankservice.events.UserKafkaProducerEvent;
 import com.company.bankservice.repositories.UserMongoRepository;
 import com.company.bankservice.services.UserCommandService;
-import com.company.utils.EncryptUtils;
+import com.company.bankservice.utils.EncryptUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class UserCommandServiceImpl implements UserCommandService {
             User user = new User();
             user.setEmail(userReqDTO.getEmail());
             user.setPassword(EncryptUtils.hashBCrypt(userReqDTO.getPassword()));
-            user.setEmail(userReqDTO.getEmail());
+            user.setName(userReqDTO.getName());
             user.setUserStatus(UserStatus.ENABLED);
             user.setCreatedAt(new Date());
 
@@ -51,9 +51,6 @@ public class UserCommandServiceImpl implements UserCommandService {
             UserCreateEventMessageDTO userCreateEventMessageDTO = new UserCreateEventMessageDTO();
             userCreateEventMessageDTO.setUserId(userStored.getId());
             userCreateEventMessageDTO.generateInitialDepositAccountDTO();
-
-            // Produce Event Kafka
-            userEventKafkaProducer.sendMessage(userCreateEventMessageDTO);
 
             //Mapping UserResDTO
             UserResDTO userResDTO = new UserResDTO();
@@ -84,6 +81,7 @@ public class UserCommandServiceImpl implements UserCommandService {
             user.setEmail(userDepositAccountReqDTO.getEmail());
             user.setPassword(EncryptUtils.hashBCrypt(userDepositAccountReqDTO.getPassword()));
             user.setEmail(userDepositAccountReqDTO.getEmail());
+            user.setName(userDepositAccountReqDTO.getName());
             user.setUserStatus(UserStatus.ENABLED);
             user.setCreatedAt(new Date());
 

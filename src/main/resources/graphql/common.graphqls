@@ -4,14 +4,16 @@ interface CommonDateType {
 }
 
 enum PaymentType {
-    CREDIT
-    DEBIT
+    CREDIT,
+    DEBIT,
+    DEPOSIT
 }
 
 enum AccountStatus {
-    ACTIVE
-    DISABLE
-    BLOCKED
+    ENABLED,
+    DISABLED,
+    BLOCKED,
+    IN_REVISION
 }
 
 enum Currency {

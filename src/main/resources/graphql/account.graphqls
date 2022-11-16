@@ -4,11 +4,12 @@
 type Account implements CommonDateType {
     id: ID!
     userId: ID!
-    creditLine: CreditLine!
     accountNumber: String
     currency: Currency
     balance: Float!
     creditAvailable: Float!
+    creditAmount: Float!
+    creditLineId: ECreditLine!
     statusAccount: AccountStatus
     createdAt: String
     updatedAt: String

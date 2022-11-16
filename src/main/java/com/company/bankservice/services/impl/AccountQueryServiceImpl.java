@@ -39,6 +39,8 @@ public class AccountQueryServiceImpl implements AccountQueryService {
                 accountResDTO.setCurrency(account.getCurrency());
                 accountResDTO.setBalance(account.getBalance());
                 accountResDTO.setCreditAvailable(account.getCreditAvailable());
+                accountResDTO.setCreditAmount(account.getCreditAmount());
+                accountResDTO.setCreditLineId(account.getCreditLineId());
                 accountResDTO.setCreatedAt(account.getCreatedAt());
 
                 return accountResDTO;
@@ -70,6 +72,8 @@ public class AccountQueryServiceImpl implements AccountQueryService {
                 accountResDTO.setCurrency(account.getCurrency());
                 accountResDTO.setBalance(account.getBalance());
                 accountResDTO.setCreditAvailable(account.getCreditAvailable());
+                accountResDTO.setCreditAmount(account.getCreditAmount());
+                accountResDTO.setCreditLineId(account.getCreditLineId());
                 accountResDTO.setCreatedAt(account.getCreatedAt());
 
                 return accountResDTO;

@@ -1,4 +1,4 @@
-package com.company.utils;
+package com.company.bankservice.utils;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 

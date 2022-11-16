@@ -2,8 +2,8 @@
 
 type Mutation {
     #Mutations Users
-    createUser(input: UserInput!): User!
-    createUserDepositAccount(input: UserAccountInput!): User!
+    createUser(input: UserInput!): UserRes!
+    createUserDepositAccount(input: UserAccountInput!): UserRes!
 
     #Mutations Accounts
     createAccount(input: InputAccount!): Account
@@ -20,8 +20,8 @@ type Query {
     getUsers(input: UserInput!): [User]
 
     #Query Accounts
-    getAccountsUser(userId: ID!): [UserRes]
-    getAccountsOverdraft:[UserRes]
+    getAccountsUser(userId: ID!): [Account]
+    getAccountsOverdraft:[Account]
 
     #Query Transactions
     getTransactionList: [Transaction]

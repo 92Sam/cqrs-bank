@@ -1,8 +1,7 @@
-package com.company.utils;
+package com.company.bankservice.utils;
 
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
-import com.company.bankservice.services.impl.AccountCommandServiceImpl;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
