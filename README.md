@@ -2,8 +2,8 @@
 
 
 ## Patterns Used
-- ####Pattern CQRS - Command Query Resposability Segregation
-- ####Pattern Events Sourcing (Pub-sub Broker)
+- Pattern CQRS - Command Query Resposability Segregation
+- Pattern Events Sourcing (Producer-Consumer Broker)
 
 ### Technologies
 - Java OpenJDK 18
@@ -17,9 +17,15 @@
 - Make
 - Maven
 
-### How Start the project
+### How Execute the project locally
 
-###Graphql Endpoints Postman
+1) Configure .env file variables.1
+2) Execute the following command
+```makefile
+make run_container
+```
+
+##Graphql Endpoints Postman
 - [Endpoints Graphql](https://github.com/92Sam/cqrs-bank/blob/develop/src/main/resources/doc/POSTMAN-CQRS-BANK.postman_collection.json)
 
 ### Structure Directories

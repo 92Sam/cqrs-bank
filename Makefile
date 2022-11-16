@@ -1,10 +1,17 @@
 include .env
 
-run_service:
+run_service: \
+	run_containers \
+	run_app
+
+run_app:
 	mvn spring-boot:run
 
-clean:
+clean_app:
 	mvn clean spring-boot:repackage
+
+compile_app:
+	mvn package
 
 run_containers:
 	docker-compose \

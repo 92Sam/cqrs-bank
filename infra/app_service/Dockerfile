@@ -1,8 +1,10 @@
-
 FROM openjdk:18.0
 
-ARG WAR_FILE=./target/*.jar
+WORKDIR /app
+ARG JAR_FILE=./target
+COPY ${JAR_FILE} .
+#RUN chmod +x ./target/bank-service-0.0.1-SNAPSHOT.jar
 
-COPY ${WAR_FILE} webapp.jar
-
-CMD ["java", "-Dspring.profiles.active=docker", "-jar", "webapp.jar"]
+EXPOSE 8080
+CMD ["/bin/sh", "-c", "sleep 3600"]
+#CMD ["java", "-jar", "/target/bank-service-0.0.1-SNAPSHOT.jar"]
