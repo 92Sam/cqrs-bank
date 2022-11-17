@@ -2,23 +2,6 @@ server:
     servlet:
         context-path: "/api/v1"
 
-app:
-    config:
-        kafka:
-            server: ${KAFKA_CLIENT_HOST:localhost}:${KAFKA_CLIENT_PORT:9092}
-            group: ${KAFKA_GROUP:data_sink}
-            topics:
-                transactions: "transactions"
-                accounts: "accounts"
-                users: "users"
-                mongo_sink: "mongo_sink"
-            max:
-                poll: 50
-                interval: 300000
-            retries: 10
-            request:
-                timeout: 5000
-
 spring:
     data:
         mongodb:
@@ -29,3 +12,17 @@ spring:
         username: ${DB_PGSQL_USERNAME:root}
         password: ${DB_PGSQL_PASSWORD:root123456}
         driver-class-name: org.postgresql.Driver
+    kafka:
+        server: ${KAFKA_CLIENT_HOST:localhost}:${KAFKA_CLIENT_PORT:9092}
+        group: ${KAFKA_GROUP:data_sink}
+        topics:
+            transactions: "transactions"
+            accounts: "accounts"
+            users: "users"
+            mongo_sink: "mongo_sink"
+        max:
+            poll: 50
+            interval: 300000
+        retries: 10
+        request:
+            timeout: 5000

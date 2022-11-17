@@ -19,7 +19,7 @@
 
 ### How Execute the project locally
 
-1) Configure .env file variables.1
+1) Configure .env file variables
 2) Execute the following command
 ```makefile
 make run_container

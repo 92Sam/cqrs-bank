@@ -1,9 +1,6 @@
 include .env
 
-run_service: \
-	run_containers \
-	run_app
-
+# App Actions
 run_app:
 	mvn spring-boot:run
 
@@ -13,7 +10,11 @@ clean_app:
 compile_app:
 	mvn package
 
-run_containers:
+# Containers Actions
+run_container_services: \
+	containers_build containers_run
+
+containers_run:
 	docker-compose \
 	--env-file ${ENV_FILE_PATH} \
 	-f ${PWD}/docker-compose-broker.yml \
@@ -27,10 +28,17 @@ containers_down:
 
 containers_restart: \
 	containers_down \
-	run_containers \
+	containers_run
 
+containers_build:
+	docker-compose \
+	--env-file ${ENV_FILE_PATH} \
+	-f ${PWD}/docker-compose-broker.yml \
+	-f ${PWD}/docker-compose.yml build \
+
+# Others Actions
 show:
-	echo ${ENV_FILE_PATH}
+	echo "Test ->" ${HOST} \
 
 removing-images-test:
 	docker images | grep "none" | awk '{print $3}' | xargs docker rmi

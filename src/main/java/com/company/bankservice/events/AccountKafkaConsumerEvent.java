@@ -22,8 +22,8 @@ public class AccountKafkaConsumerEvent {
     Logger log = LogManager.getLogger(AccountKafkaConsumerEvent.class);
 
     @KafkaListener(
-            topics = "${app.config.kafka.topics.users}",
-            groupId = "${app.config.kafka.group}",
+            topics = "${spring.kafka.topics.users}",
+            groupId = "${spring.kafka.group}",
             containerFactory = "userListenerContainerFactory"
     )
     public void listen(@Payload UserCreateEventMessageDTO message, Acknowledgment acknowledgment) {

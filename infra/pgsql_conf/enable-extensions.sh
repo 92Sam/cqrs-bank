@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 echo "Waiting for postgres to start..."
-sleep 3
+sleep 1
 echo "Enabling extensions..."
 psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
   create extension if not exists "pg_trgm";

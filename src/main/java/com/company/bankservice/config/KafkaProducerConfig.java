@@ -65,13 +65,13 @@ public class KafkaProducerConfig {
 
     private Map<String, Object> configProps() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, env.getProperty("app.config.kafka.server"));
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, env.getProperty("spring.kafka.server"));
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         configProps.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 3000);
         configProps.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 3000);
-        configProps.put(ProducerConfig.RETRIES_CONFIG, Integer.valueOf(env.getProperty("app.config.kafka.retries")));
-//        configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, Integer.valueOf(env.getProperty("app.config.kafka.retry.backoff")));
+        configProps.put(ProducerConfig.RETRIES_CONFIG, Integer.valueOf(env.getProperty("spring.kafka.retries")));
+//        configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, Integer.valueOf(env.getProperty("spring.kafka.retry.backoff")));
         return configProps;
     }
 }

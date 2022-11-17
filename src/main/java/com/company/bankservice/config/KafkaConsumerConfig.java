@@ -39,11 +39,11 @@ public class KafkaConsumerConfig {
 
     private Map<String, Object> configProps() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, env.getProperty("app.config.kafka.server"));
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, env.getProperty("app.config.kafka.group"));
+        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, env.getProperty("spring.kafka.server"));
+        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, env.getProperty("spring.kafka.group"));
         configProps.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
-        configProps.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, Integer.valueOf(env.getProperty("app.config.kafka.max.poll")));
-        configProps.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, Integer.valueOf(env.getProperty("app.config.kafka.max.interval")));
+        configProps.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, Integer.valueOf(env.getProperty("spring.kafka.max.poll")));
+        configProps.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, Integer.valueOf(env.getProperty("spring.kafka.max.interval")));
         return configProps;
     }
 

@@ -23,7 +23,7 @@ public class AccountKafkaProducerEvent {
 
     private static Logger log = LogManager.getLogger(AccountKafkaProducerEvent.class);
 
-    @Value(value = "${app.config.kafka.topics.accounts}")
+    @Value(value = "${spring.kafka.topics.accounts}")
     private String topic;
 
     public boolean sendMessage(Account accountMsg) {

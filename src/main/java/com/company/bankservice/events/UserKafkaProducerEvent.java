@@ -23,7 +23,7 @@ public class UserKafkaProducerEvent {
 
     private static Logger log = LogManager.getLogger(UserKafkaProducerEvent.class);
 
-    @Value(value = "${app.config.kafka.topics.users}")
+    @Value(value = "${spring.kafka.topics.users}")
     private String topic;
 
     public boolean sendMessage(UserCreateEventMessageDTO transactionMsg) {

@@ -23,7 +23,7 @@ public class TransactionKafkaProducerEvent {
 
     private static Logger log = LogManager.getLogger(TransactionKafkaProducerEvent.class);
 
-    @Value(value = "${app.config.kafka.topics.transactions}")
+    @Value(value = "${spring.kafka.topics.transactions}")
     private String topic;
 
     public boolean sendMessage(Transaction transactionMsg) {

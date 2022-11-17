@@ -22,8 +22,8 @@ public class TransactionKafkaConsumerEvent {
     Logger log = LogManager.getLogger(TransactionKafkaConsumerEvent.class);
 
     @KafkaListener(
-            topics = "${app.config.kafka.topics.transactions}",
-            groupId = "${app.config.kafka.group}",
+            topics = "${spring.kafka.topics.transactions}",
+            groupId = "${spring.kafka.group}",
             containerFactory = "transactionListenerContainerFactory"
     )
     public void listenTransactions(@Payload Transaction message, Acknowledgment acknowledgment) {
@@ -39,8 +39,8 @@ public class TransactionKafkaConsumerEvent {
 
 
     @KafkaListener(
-            topics = "${app.config.kafka.topics.accounts}",
-            groupId = "${app.config.kafka.group}",
+            topics = "${spring.kafka.topics.accounts}",
+            groupId = "${spring.kafka.group}",
             containerFactory = "accountListenerContainerFactory"
     )
     public void listenAccountsCreateTransactions(@Payload Account message, Acknowledgment acknowledgment) {
