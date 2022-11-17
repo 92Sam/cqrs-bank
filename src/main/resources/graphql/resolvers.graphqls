@@ -1,16 +1,19 @@
 
+union UserResponse = User | ErrorMessage
+union AccountResponse = Account | ErrorMessage
+union TransactionResponse = Transaction | ErrorMessage
 
 type Mutation {
     #Mutations Users
-    createUser(input: UserInput!): UserRes!
-    createUserDepositAccount(input: UserAccountInput!): UserRes!
+    createUser(input: UserInput!): User!
+    createUserDepositAccount(input: UserAccountInput!): User!
 
     #Mutations Accounts
     createAccount(input: InputAccount!): Account
     updateStatusAccount(input: InputUpdateStatusAccount!): Boolean
 
     #Mutations Transactions
-    addTransaction(input: TransactionInput): Transaction
+    addTransaction(input: TransactionInput): Transaction!
 }
 
 type Query {

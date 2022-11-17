@@ -6,6 +6,7 @@ import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
 import com.company.bankservice.enums.TransactionType;
 import com.company.bankservice.events.TransactionKafkaProducerEvent;
+import com.company.bankservice.mappers.TransactionMapper;
 import com.company.bankservice.repositories.AccountMongoRepository;
 import com.company.bankservice.repositories.TransactionMongoRepository;
 import com.company.bankservice.services.TransactionCommandService;
@@ -36,37 +37,39 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     private static Logger log = LogManager.getLogger(TransactionCommandServiceImpl.class);
 
     @Override
-    public TransactionResDTO create(TransactionReqDTO transactionReq) {
+    public TransactionResDTO create(TransactionReqDTO transactionReq) throws Exception {
 
         Transaction transaction = new Transaction();
         transaction.setAccountId(transactionReq.getAccountId());
         transaction.setAmount(transactionReq.getAmount());
         transaction.setTransactionTypeByAmount(transactionReq.getAmount());
         transaction.setTitle("Init Deposit Account");
-        transaction.setDescription(transactionReq.getDescription().orElse(null));
+//        transaction.setDescription(transactionReq.getDescription().orElse(null));
         transaction.setCreatedAt(new Date());
 
         Account account = accountCommandServiceImpl.updateAccountBalanceByTransaction(transaction);
         if(account == null){
-            return null;
+            throw new Exception("Error on execute Transaction");
         }
 
-        TransactionResDTO transactionResDTO = new TransactionResDTO();
-        transaction = transactionMongoRepository.save(transaction);
-        transactionResDTO.setAccountId(transaction.getAccountId());
-        transactionResDTO.setTransactionType(transaction.getTransactionType());
-        transactionResDTO.setCreatedAt(transaction.getCreatedAt());
-        transactionResDTO.setAmount(transaction.getAmount());
-        if (transaction.getTitle() != null){
-            transactionResDTO.setTitle(transaction.getTitle());
-        }
-        if (transaction.getDescription() != null){
-            transactionResDTO.setDescription(transaction.getDescription());
-        }
+//        TransactionResDTO transactionResDTO = new TransactionResDTO();
+//        transaction = transactionMongoRepository.save(transaction);
+//        TransactionResDTO.setAccountId(transaction.getAccountId());
+//        transactionResDTO.setTransactionType(transaction.getTransactionType());
+//        transactionResDTO.setCreatedAt(transaction.getCreatedAt());
+//        transactionResDTO.setAmount(transaction.getAmount());
+//        if (transaction.getTitle() != null){
+//            transactionResDTO.setTitle(transaction.getTitle());
+//        }
+//        if (transaction.getDescription() != null){
+//            transactionResDTO.setDescription(transaction.getDescription());
+//        }
 
         transactionEventKafkaProducer.sendMessage(transaction);
 
-        return transactionResDTO;
+//        TransactionMapper.transactionMapper.transactionToTransactionResDTO(transaction);
+
+        return TransactionMapper.transactionMapper.transactionToTransactionResDTO(transaction);
     }
 
     @Override

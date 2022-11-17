@@ -4,6 +4,7 @@ import com.company.bankservice.dto.resolvers.UserLoginResDTO;
 import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.enums.errors.UserError;
+import com.company.bankservice.mappers.UserMapper;
 import com.company.bankservice.repositories.UserMongoRepository;
 import com.company.bankservice.services.UserQueryService;
 import com.company.bankservice.utils.EncryptUtils;
@@ -38,8 +39,8 @@ public class UserQueryServiceImpl implements UserQueryService {
                 return null;
             }
 
-            UserLoginResDTO userLoginResDTO = new UserLoginResDTO();
-            userLoginResDTO.setId(user.getId());
+
+            UserLoginResDTO userLoginResDTO = UserMapper.userMapper.userToUserLoginResDTO(user);
             userLoginResDTO.setToken(JwtUtils.generateToken());
 
             return userLoginResDTO;

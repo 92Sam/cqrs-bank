@@ -15,7 +15,7 @@ public class TransactionReqDTO {
     private String accountId;
     private TransactionType transactionType;
     private Float amount;
-    private Optional<String> title;
+    private String title;
     @Nullable
-    private Optional<String> description;
+    private String description;
 }

@@ -1,6 +1,3 @@
-#import "./user.graphqls"
-#import "./common.graphqls"
-
 type Account implements CommonDateType {
     id: ID!
     userId: ID!

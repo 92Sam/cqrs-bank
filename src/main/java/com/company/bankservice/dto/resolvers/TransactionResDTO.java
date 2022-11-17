@@ -2,14 +2,15 @@ package com.company.bankservice.dto.resolvers;
 
 
 import com.company.bankservice.enums.TransactionType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TransactionResDTO {
     private String id;
     private String accountId;
