@@ -36,7 +36,7 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     private static Logger log = LogManager.getLogger(TransactionCommandServiceImpl.class);
 
     @Override
-    public TransactionResDTO create(TransactionReqDTO transactionReq) {
+    public TransactionResDTO create(TransactionReqDTO transactionReq) throws Exception {
 
         Transaction transaction = new Transaction();
         transaction.setAccountId(transactionReq.getAccountId());
@@ -48,7 +48,7 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
 
         Account account = accountCommandServiceImpl.updateAccountBalanceByTransaction(transaction);
         if(account == null){
-            return null;
+            throw new Exception("Error on execute Transaction");
         }
 
         TransactionResDTO transactionResDTO = new TransactionResDTO();

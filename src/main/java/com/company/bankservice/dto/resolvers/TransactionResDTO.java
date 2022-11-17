@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class TransactionResDTO {
+public class TransactionResDTO extends ErrorResponseDTO {
     private String id;
     private String accountId;
     private TransactionType transactionType;
