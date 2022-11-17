@@ -89,6 +89,9 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     public Account updateAccountBalanceByTransaction(Transaction transaction) {
 
         Optional<Account> account = accountMongoRepository.findById(transaction.getAccountId());
+        log.info("Account {}", account);
+        log.info("Account {}", account.isEmpty());
+        log.info(account.isEmpty());
         if (account.isEmpty()){
             log.info("Error the account not exist ");
             return null;
@@ -104,7 +107,6 @@ public class AccountCommandServiceImpl implements AccountCommandService {
         log.info("Transaction {}", accountBalance.toString());
 
         return this.updateAccountBalance(accountBalance);
-
     }
 
     private Account updateAccountBalance(Account account) {

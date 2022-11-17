@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionCommandServiceImpl implements TransactionCommandService {
@@ -46,10 +47,12 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
         transaction.setCreatedAt(new Date());
 
         Account account = accountCommandServiceImpl.updateAccountBalanceByTransaction(transaction);
-        TransactionResDTO transactionResDTO = new TransactionResDTO();
+        if(account == null){
+            return null;
+        }
 
+        TransactionResDTO transactionResDTO = new TransactionResDTO();
         transaction = transactionMongoRepository.save(transaction);
-//
         transactionResDTO.setAccountId(transaction.getAccountId());
         transactionResDTO.setTransactionType(transaction.getTransactionType());
         transactionResDTO.setCreatedAt(transaction.getCreatedAt());
@@ -67,7 +70,7 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     }
 
     @Override
-    public TransactionResDTO initializeAccount(Account account) {
+    public List<TransactionResDTO> initializeAccount(Account account) {
 
         Transaction transactionDeposit = new Transaction();
         transactionDeposit.setAccountId(account.getId());
@@ -86,18 +89,14 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
         List<Transaction> transactionList= Arrays.asList(transactionDeposit);
 
         List<Transaction> transactions = transactionMongoRepository.insert(transactionList);
-        transactions.forEach(data ->{
-            System.out.println(data);
-        });
-//        log.info(transaction);
-//        transactionEventKafkaProducer.sendMessage(transaction);
-        TransactionResDTO transactionResDTO = new TransactionResDTO();
-//        transactionResDTO.setId(transaction.getId());
-//        transactionResDTO.setAmount(transaction.getAmount());
-//        transactionResDTO.setDescription(transaction.getDescription());
-//        transactionResDTO.setTitle(transaction.getTitle());
-
-        return transactionResDTO;
+        return transactions.stream().map(transaction ->{
+            TransactionResDTO transactionResDTO = new TransactionResDTO();
+            transactionResDTO.setId(transaction.getId());
+            transactionResDTO.setAmount(transaction.getAmount());
+            transactionResDTO.setDescription(transaction.getDescription());
+            transactionResDTO.setTitle(transaction.getTitle());
+            return transactionResDTO;
+        }).collect(Collectors.toList());
     }
 
 }
