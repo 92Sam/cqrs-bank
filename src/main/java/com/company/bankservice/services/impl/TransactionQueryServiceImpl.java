@@ -4,6 +4,7 @@ import com.company.bankservice.dto.resolvers.TransactionResDTO;
 import com.company.bankservice.dto.resolvers.TransactionsAccountHistoricReqDTO;
 import com.company.bankservice.dto.resolvers.TransactionsHistoricReqDTO;
 import com.company.bankservice.entities.Transaction;
+import com.company.bankservice.mappers.TransactionMapper;
 import com.company.bankservice.repositories.TransactionMongoRepository;
 import com.company.bankservice.services.TransactionQueryService;
 import org.apache.logging.log4j.LogManager;
@@ -31,21 +32,7 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
                 return null;
             }
 
-            return transactionList.stream().map(transaction -> {
-                TransactionResDTO transactionResDTO = new TransactionResDTO();
-                transactionResDTO.setId(transaction.getId());
-                transactionResDTO.setTransactionType(transaction.getTransactionType());
-                transactionResDTO.setAccountId(transaction.getAccountId());
-                transactionResDTO.setCreatedAt(transaction.getCreatedAt());
-                transactionResDTO.setAmount(transaction.getAmount());
-                if (transaction.getDescription() != null) {
-                    transactionResDTO.setTitle(transaction.getTitle());
-                }
-                if (transaction.getDescription() != null) {
-                    transactionResDTO.setDescription(transaction.getDescription());
-                }
-                return transactionResDTO;
-            }).collect(Collectors.toList());
+            return TransactionMapper.transactionMapper.transactionListToTransactionResDTOList(transactionList);
 
         }catch (Error error){
             log.error("Error executing Query {}", error);
@@ -66,23 +53,9 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
                 return null;
             }
 
-            return transactionList.stream().map(transaction -> {
-                TransactionResDTO transactionResDTO = new TransactionResDTO();
-                transactionResDTO.setId(transaction.getId());
-                transactionResDTO.setTransactionType(transaction.getTransactionType());
-                transactionResDTO.setAccountId(transaction.getAccountId());
-                transactionResDTO.setCreatedAt(transaction.getCreatedAt());
-                transactionResDTO.setAmount(transaction.getAmount());
-                if (transaction.getDescription() != null) {
-                    transactionResDTO.setTitle(transaction.getTitle());
-                }
-                if (transaction.getDescription() != null) {
-                    transactionResDTO.setDescription(transaction.getDescription());
-                }
-                return transactionResDTO;
-            }).collect(Collectors.toList());
+            return TransactionMapper.transactionMapper.transactionListToTransactionResDTOList(transactionList);
 
-            }catch (Error error){
+        }catch (Error error){
                 log.error("Error executing Query {}", error);
             }
         return null;
@@ -100,21 +73,7 @@ public class TransactionQueryServiceImpl implements TransactionQueryService {
                 return null;
             }
 
-            return transactionList.stream().map(transaction -> {
-                TransactionResDTO transactionResDTO = new TransactionResDTO();
-                transactionResDTO.setId(transaction.getId());
-                transactionResDTO.setTransactionType(transaction.getTransactionType());
-                transactionResDTO.setAccountId(transaction.getAccountId());
-                transactionResDTO.setCreatedAt(transaction.getCreatedAt());
-                transactionResDTO.setAmount(transaction.getAmount());
-                if (transaction.getDescription() != null) {
-                    transactionResDTO.setTitle(transaction.getTitle());
-                }
-                if (transaction.getDescription() != null) {
-                    transactionResDTO.setDescription(transaction.getDescription());
-                }
-                return transactionResDTO;
-            }).collect(Collectors.toList());
+            return TransactionMapper.transactionMapper.transactionListToTransactionResDTOList(transactionList);
 
         }catch (Error error){
             log.error("Error executing Query {}", error);

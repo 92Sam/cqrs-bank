@@ -1,8 +1,7 @@
 package com.company.bankservice.entities;
 
 import com.company.bankservice.enums.UserStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.Id;
@@ -16,6 +15,9 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Document(collection = "users")

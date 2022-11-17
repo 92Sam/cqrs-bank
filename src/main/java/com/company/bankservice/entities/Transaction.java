@@ -2,8 +2,7 @@ package com.company.bankservice.entities;
 
 import com.company.bankservice.enums.TransactionType;
 import com.mongodb.lang.Nullable;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,11 +16,14 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
-//import javax.persistence.Entity;
 
+//@Entity(name = "transactions")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-//@Entity(name = "transactions")
+@Builder
 @Document(collection = "transactions")
 public class Transaction {
 

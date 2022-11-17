@@ -3,6 +3,8 @@ package com.company.bankservice.services.impl;
 import com.company.bankservice.dto.resolvers.AccountResDTO;
 import com.company.bankservice.dto.resolvers.TransactionResDTO;
 import com.company.bankservice.entities.Account;
+import com.company.bankservice.mappers.AccountMapper;
+import com.company.bankservice.mappers.TransactionMapper;
 import com.company.bankservice.repositories.AccountMongoRepository;
 import com.company.bankservice.services.AccountQueryService;
 import org.apache.logging.log4j.LogManager;
@@ -30,21 +32,7 @@ public class AccountQueryServiceImpl implements AccountQueryService {
                 return null;
             }
 
-            return accountList.stream().map(account -> {
-                AccountResDTO accountResDTO = new AccountResDTO();
-                accountResDTO.setId(account.getId());
-                accountResDTO.setUserId(account.getUserId());
-                accountResDTO.setAccountNumber(account.getAccountNumber());
-                accountResDTO.setAccountStatus(account.getAccountStatus());
-                accountResDTO.setCurrency(account.getCurrency());
-                accountResDTO.setBalance(account.getBalance());
-                accountResDTO.setCreditAvailable(account.getCreditAvailable());
-                accountResDTO.setCreditAmount(account.getCreditAmount());
-                accountResDTO.setCreditLineId(account.getCreditLineId());
-                accountResDTO.setCreatedAt(account.getCreatedAt());
-
-                return accountResDTO;
-            }).collect(Collectors.toList());
+            return AccountMapper.accountMapper.accountListToAccountResDTOList(accountList);
 
         }catch (Error error){
             log.error("Error on getAccountsOverdraft - {}", error);
@@ -63,21 +51,7 @@ public class AccountQueryServiceImpl implements AccountQueryService {
                 return null;
             }
 
-            return accountList.stream().map(account -> {
-                AccountResDTO accountResDTO = new AccountResDTO();
-                accountResDTO.setId(account.getId());
-                accountResDTO.setUserId(account.getUserId());
-                accountResDTO.setAccountNumber(account.getAccountNumber());
-                accountResDTO.setAccountStatus(account.getAccountStatus());
-                accountResDTO.setCurrency(account.getCurrency());
-                accountResDTO.setBalance(account.getBalance());
-                accountResDTO.setCreditAvailable(account.getCreditAvailable());
-                accountResDTO.setCreditAmount(account.getCreditAmount());
-                accountResDTO.setCreditLineId(account.getCreditLineId());
-                accountResDTO.setCreatedAt(account.getCreatedAt());
-
-                return accountResDTO;
-            }).collect(Collectors.toList());
+            return AccountMapper.accountMapper.accountListToAccountResDTOList(accountList);
 
         }catch (Error error){
             log.error("Error on getAccountsOverdraft - {}", error);
