@@ -7,7 +7,7 @@ import com.company.bankservice.enums.AccountStatus;
 import com.company.bankservice.enums.CreditLine;
 import com.company.bankservice.enums.Currency;
 import com.company.bankservice.events.AccountKafkaProducerEvent;
-import com.company.bankservice.repositories.AccountMongoRepository;
+import com.company.bankservice.repositories.mongo.AccountMongoRepository;
 import com.company.bankservice.services.AccountCommandService;
 import com.company.bankservice.utils.AccountUtils;
 import org.apache.logging.log4j.LogManager;

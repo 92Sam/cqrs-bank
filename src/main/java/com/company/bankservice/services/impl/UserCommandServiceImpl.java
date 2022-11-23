@@ -8,7 +8,7 @@ import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.enums.errors.UserError;
 import com.company.bankservice.events.UserKafkaProducerEvent;
-import com.company.bankservice.repositories.UserMongoRepository;
+import com.company.bankservice.repositories.mongo.UserMongoRepository;
 import com.company.bankservice.services.UserCommandService;
 import com.company.bankservice.utils.EncryptUtils;
 import org.apache.logging.log4j.LogManager;

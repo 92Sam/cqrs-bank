@@ -1,11 +1,9 @@
 package com.company.bankservice.services.impl;
 
 import com.company.bankservice.dto.resolvers.AccountResDTO;
-import com.company.bankservice.dto.resolvers.TransactionResDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.mappers.AccountMapper;
-import com.company.bankservice.mappers.TransactionMapper;
-import com.company.bankservice.repositories.AccountMongoRepository;
+import com.company.bankservice.repositories.mongo.AccountMongoRepository;
 import com.company.bankservice.services.AccountQueryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AccountQueryServiceImpl implements AccountQueryService {

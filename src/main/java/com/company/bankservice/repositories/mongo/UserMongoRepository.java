@@ -1,4 +1,4 @@
-package com.company.bankservice.repositories;
+package com.company.bankservice.repositories.mongo;
 
 import com.company.bankservice.entities.User;
 import org.springframework.data.mongodb.repository.MongoRepository;

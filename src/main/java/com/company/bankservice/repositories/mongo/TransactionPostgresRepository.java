@@ -1,4 +1,4 @@
-package com.company.bankservice.repositories;
+package com.company.bankservice.repositories.mongo;
 
 public interface TransactionPostgresRepository {
 }

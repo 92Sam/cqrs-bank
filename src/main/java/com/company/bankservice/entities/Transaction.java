@@ -21,18 +21,17 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder
+@Entity(name = "transactions")
 @Document(collection = "transactions")
 public class Transaction {
 
-    @Id
-    @Column(name = "id")
+    @javax.persistence.Id
+    @Column(name = "id", nullable = false)
     private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id_ID")
+//    @ManyToOne
+//    @JoinColumn(name = "account_id_ID")
     @NonNull
     private String accountId;
 

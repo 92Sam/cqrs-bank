@@ -5,7 +5,7 @@ import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.enums.errors.UserError;
 import com.company.bankservice.mappers.UserMapper;
-import com.company.bankservice.repositories.UserMongoRepository;
+import com.company.bankservice.repositories.mongo.UserMongoRepository;
 import com.company.bankservice.services.UserQueryService;
 import com.company.bankservice.utils.EncryptUtils;
 import com.company.bankservice.utils.JwtUtils;
