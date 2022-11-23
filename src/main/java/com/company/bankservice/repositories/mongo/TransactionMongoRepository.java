@@ -1,4 +1,4 @@
-package com.company.bankservice.repositories;
+package com.company.bankservice.repositories.mongo;
 
 import com.company.bankservice.entities.Transaction;
 import org.springframework.data.mongodb.repository.Aggregation;

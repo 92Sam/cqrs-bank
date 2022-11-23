@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -21,9 +22,11 @@ import java.util.List;
 @Getter
 @Setter
 @Document(collection = "users")
+@Entity(name = "users")
 public class User {
 
-    @Id
+    @javax.persistence.Id
+    @Column(name = "id", nullable = false)
     private String id;
 
     @Indexed(unique = true)
@@ -42,6 +45,6 @@ public class User {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Account> accounts;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private List<Account> accounts;
 }

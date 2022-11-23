@@ -19,14 +19,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-//@Entity(name = "accounts")
+@Entity(name = "accounts")
 @Document(collection = "accounts")
 public class Account {
-    @Id
+//    @Id
+//    private String id;
+    @javax.persistence.Id
+    @Column(name = "id", nullable = false)
     private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_ID")
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
     private String userId;
 
     @Enumerated
