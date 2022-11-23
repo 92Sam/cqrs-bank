@@ -2,7 +2,8 @@ include .env
 
 # App Actions
 run_app:
-	mvn spring-boot:run
+	mvn org.springframework.boot:spring-boot-maven-plugin:run
+	#mvn spring-boot:run
 
 clean_app:
 	mvn clean spring-boot:repackage

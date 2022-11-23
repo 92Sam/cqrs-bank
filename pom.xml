@@ -10,15 +10,23 @@
 	</parent>
 	<groupId>com.company</groupId>
 	<artifactId>bank-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>bank-service</name>
 	<description>Start Project Bank Servicet</description>
 	<properties>
 		<java.version>18</java.version>
+		<start-class>com.company.bankservice.BankServiceApplication</start-class>
+		<org.version.project>0.0.1-SNAPSHOT</org.version.project>
 		<org.projectlombok.version>1.18.24</org.projectlombok.version>
 		<org.projectlombok-mapstruct.version>0.2.0</org.projectlombok-mapstruct.version>
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 	</properties>
+	<version>${org.version.project}</version>
+	<modules>
+		<module>query</module>
+		<module>command</module>
+	</modules>
+	<packaging>pom</packaging>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -70,6 +78,18 @@
 			<version>2.9.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.company</groupId>
+			<artifactId>command</artifactId>
+			<version>${org.version.project}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.company</groupId>
+			<artifactId>query</artifactId>
+			<version>${org.version.project}</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -102,13 +122,27 @@
 		</dependency>
 
 	</dependencies>
-
+	<repositories>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<source>18</source>
+					<target>18</target>
+					<mainClass>${start-class>}</mainClass>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>

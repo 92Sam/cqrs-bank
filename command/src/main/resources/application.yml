@@ -1,0 +1,28 @@
+server:
+    servlet:
+        context-path: "/api/v1"
+
+spring:
+    data:
+        mongodb:
+            database: ${DB_PGSQL_DATABASE:bank_service}
+            uri: mongodb://${DB_MONGO_USERNAME:mongoroot}:${DB_MONGO_PASSWORD:mongoroot123456}@${DB_MONGO_HOST:127.0.0.1}:${DB_MONGO_PORT:27018}
+    datasource:
+        url: jdbc:postgresql://${DB_PGSQL_HOST:localhost}:${DB_PGSQL_HTTP_PORT:5433}/${DB_PGSQL_DATABASE:bank_service}
+        username: ${DB_PGSQL_USERNAME:root}
+        password: ${DB_PGSQL_PASSWORD:root123456}
+        driver-class-name: org.postgresql.Driver
+    kafka:
+        server: ${KAFKA_CLIENT_HOST:localhost}:${KAFKA_CLIENT_PORT:9092}
+        group: ${KAFKA_GROUP:data_sink}
+        topics:
+            transactions: "transactions"
+            accounts: "accounts"
+            users: "users"
+            mongo_sink: "mongo_sink"
+        max:
+            poll: 50
+            interval: 300000
+        retries: 10
+        request:
+            timeout: 5000
