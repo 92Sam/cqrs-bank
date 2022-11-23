@@ -3,11 +3,14 @@ package com.company.bankservice.services.impl;
 import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
+import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.AccountStatus;
 import com.company.bankservice.enums.CreditLine;
 import com.company.bankservice.enums.Currency;
 import com.company.bankservice.events.AccountKafkaProducerEvent;
 import com.company.bankservice.repositories.mongo.AccountMongoRepository;
+import com.company.bankservice.repositories.pgsql.AccountPostgresRepository;
+import com.company.bankservice.repositories.pgsql.UserPostgresRepository;
 import com.company.bankservice.services.AccountCommandService;
 import com.company.bankservice.utils.AccountUtils;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +24,9 @@ import java.util.Optional;
 
 @Service
 public class AccountCommandServiceImpl implements AccountCommandService {
+
+    @Autowired
+    AccountPostgresRepository accountPostgresRepository;
 
     @Autowired
     AccountMongoRepository accountMongoRepository;
@@ -45,6 +51,8 @@ public class AccountCommandServiceImpl implements AccountCommandService {
             account.setCreatedAt(LocalDateTime.now());
 
             Account res = accountMongoRepository.save(account);
+
+            Account accountStoredpsql = accountPostgresRepository.save(account);
 
             accountKafkaProducerEvent.sendMessage(res);
 

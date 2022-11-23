@@ -8,7 +8,9 @@ import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.enums.errors.UserError;
 import com.company.bankservice.events.UserKafkaProducerEvent;
+import com.company.bankservice.repositories.impl.UserPostgrestRepositoryImpl;
 import com.company.bankservice.repositories.mongo.UserMongoRepository;
+import com.company.bankservice.repositories.pgsql.UserPostgresRepository;
 import com.company.bankservice.services.UserCommandService;
 import com.company.bankservice.utils.EncryptUtils;
 import org.apache.logging.log4j.LogManager;
@@ -17,9 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class UserCommandServiceImpl implements UserCommandService {
+
+    @Autowired
+    UserPostgresRepository userPostgresRepository;
 
     @Autowired
     UserMongoRepository userMongoRepository;
@@ -47,6 +53,8 @@ public class UserCommandServiceImpl implements UserCommandService {
 
             // Produce Store the User
             User userStored = userMongoRepository.save(user);
+
+            User userStoredpsql = userPostgresRepository.save(user);
 
             UserCreateEventMessageDTO userCreateEventMessageDTO = new UserCreateEventMessageDTO();
             userCreateEventMessageDTO.setUserId(userStored.getId());
@@ -86,6 +94,8 @@ public class UserCommandServiceImpl implements UserCommandService {
             user.setCreatedAt(new Date());
 
             User userStored = userMongoRepository.save(user);
+
+            User userStoredpsql = userPostgresRepository.save(user);
 
             //Mapping UserCreateEventMessageDTO
             UserCreateEventMessageDTO userCreateEventMessageDTO = new UserCreateEventMessageDTO();

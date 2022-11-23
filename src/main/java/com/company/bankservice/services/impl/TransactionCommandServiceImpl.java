@@ -8,6 +8,7 @@ import com.company.bankservice.enums.TransactionType;
 import com.company.bankservice.events.TransactionKafkaProducerEvent;
 import com.company.bankservice.mappers.TransactionMapper;
 import com.company.bankservice.repositories.mongo.TransactionMongoRepository;
+import com.company.bankservice.repositories.pgsql.TransactionPostgresRepository;
 import com.company.bankservice.services.TransactionCommandService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +24,9 @@ import java.util.stream.Collectors;
 public class TransactionCommandServiceImpl implements TransactionCommandService {
 
     @Autowired
+    private TransactionPostgresRepository transactionPostgresRepository;
+
+    @Autowired
     private TransactionMongoRepository transactionMongoRepository;
 
     @Autowired
@@ -35,68 +39,58 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
 
     @Override
     public TransactionResDTO create(TransactionReqDTO transactionReq) throws Exception {
+        try {
+            Transaction transaction = new Transaction();
+            transaction.setAccountId(transactionReq.getAccountId());
+            transaction.setAmount(transactionReq.getAmount());
+            transaction.setTransactionTypeByAmount(transactionReq.getAmount());
+            transaction.setTitle("Init Deposit Account");
+    //        transaction.setDescription(transactionReq.getDescription().orElse(null));
+            transaction.setCreatedAt(new Date());
 
-        Transaction transaction = new Transaction();
-        transaction.setAccountId(transactionReq.getAccountId());
-        transaction.setAmount(transactionReq.getAmount());
-        transaction.setTransactionTypeByAmount(transactionReq.getAmount());
-        transaction.setTitle("Init Deposit Account");
-//        transaction.setDescription(transactionReq.getDescription().orElse(null));
-        transaction.setCreatedAt(new Date());
+            Account account = accountCommandServiceImpl.updateAccountBalanceByTransaction(transaction);
+            if(account == null){
+                throw new Exception("Error on execute Transaction");
+            }
 
-        Account account = accountCommandServiceImpl.updateAccountBalanceByTransaction(transaction);
-        if(account == null){
-            throw new Exception("Error on execute Transaction");
+            transactionMongoRepository.save(transaction);
+            transactionPostgresRepository.save(transaction);
+
+            transactionEventKafkaProducer.sendMessage(transaction);
+            return TransactionMapper.transactionMapper.transactionToTransactionResDTO(transaction);
+        }catch ( Error error ){
+            log.error("Error on create {}", error);
         }
-
-//        TransactionResDTO transactionResDTO = new TransactionResDTO();
-//        transaction = transactionMongoRepository.save(transaction);
-//        TransactionResDTO.setAccountId(transaction.getAccountId());
-//        transactionResDTO.setTransactionType(transaction.getTransactionType());
-//        transactionResDTO.setCreatedAt(transaction.getCreatedAt());
-//        transactionResDTO.setAmount(transaction.getAmount());
-//        if (transaction.getTitle() != null){
-//            transactionResDTO.setTitle(transaction.getTitle());
-//        }
-//        if (transaction.getDescription() != null){
-//            transactionResDTO.setDescription(transaction.getDescription());
-//        }
-
-        transactionEventKafkaProducer.sendMessage(transaction);
-
-//        TransactionMapper.transactionMapper.transactionToTransactionResDTO(transaction);
-
-        return TransactionMapper.transactionMapper.transactionToTransactionResDTO(transaction);
+        return null;
     }
 
     @Override
     public List<TransactionResDTO> initializeAccount(Account account) {
+        try{
+            Transaction transactionDeposit = new Transaction();
+            transactionDeposit.setAccountId(account.getId());
+            transactionDeposit.setAmount(account.getBalance());
+            transactionDeposit.setTransactionType(TransactionType.DEPOSIT);
+            transactionDeposit.setTitle("Initialize Project");
+            transactionDeposit.setCreatedAt(new Date());
 
-        Transaction transactionDeposit = new Transaction();
-        transactionDeposit.setAccountId(account.getId());
-        transactionDeposit.setAmount(account.getBalance());
-        transactionDeposit.setTransactionType(TransactionType.DEPOSIT);
-        transactionDeposit.setTitle("Initialize Project");
-        transactionDeposit.setCreatedAt(new Date());
+            List<Transaction> transactionList= Arrays.asList(transactionDeposit);
 
-//        Transaction transactionCredit = new Transaction();
-//        transactionCredit.setAccountId(account.getId());
-//        transactionCredit.setAmount(account.getCreditAvailable());
-//        transactionCredit.setTransactionType(TransactionType.CREDIT);
-//        transactionCredit.setTitle("Credit Available");
-//        transactionCredit.setCreatedAt(LocalDateTime.from(LocalTime.now()));
+            List<Transaction> transactions = transactionMongoRepository.insert(transactionList);
+            List<Transaction> transactionsPsql = transactionPostgresRepository.saveAll(transactionList);
 
-        List<Transaction> transactionList= Arrays.asList(transactionDeposit);
-
-        List<Transaction> transactions = transactionMongoRepository.insert(transactionList);
-        return transactions.stream().map(transaction ->{
-            TransactionResDTO transactionResDTO = new TransactionResDTO();
-            transactionResDTO.setId(transaction.getId());
-            transactionResDTO.setAmount(transaction.getAmount());
-            transactionResDTO.setDescription(transaction.getDescription());
-            transactionResDTO.setTitle(transaction.getTitle());
-            return transactionResDTO;
-        }).collect(Collectors.toList());
+            return transactions.stream().map(transaction ->{
+                TransactionResDTO transactionResDTO = new TransactionResDTO();
+                transactionResDTO.setId(transaction.getId());
+                transactionResDTO.setAmount(transaction.getAmount());
+                transactionResDTO.setDescription(transaction.getDescription());
+                transactionResDTO.setTitle(transaction.getTitle());
+                return transactionResDTO;
+            }).collect(Collectors.toList());
+        }catch (Error error){
+            log.error("Error on initializeAccount", error);
+        }
+        return null;
     }
 
 }

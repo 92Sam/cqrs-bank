@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserPostgresRepository extends JpaRepository<User, String> {
-    @Query
-    User findByEmail(String email);
+//    @Query
+//    User findByEmail(String email);
 }

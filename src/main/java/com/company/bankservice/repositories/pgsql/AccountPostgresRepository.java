@@ -12,14 +12,14 @@ import java.util.List;
 public interface AccountPostgresRepository extends JpaRepository<Account, String> {
 
 //    @Query("{'userId' : ?0, 'currency' : ?1}")
-    @Query
-    Account findAccountByUserIdByCurrency(String userId, Currency currency);
-
-//    @Query("{'userId' : {'$eq': ?0 }}")
-    @Query
-    List<Account> findAccountByUserId(String userId);
-
-//    @Query("{'balance' : {'$lt': 0 }}")
-    @Query
-    List<Account> getAccountsOverdraft();
+//    @Query(value = "SELECT * FROM accounts WHERE user_id=:userId AND currency:currency")
+//    Account findAccountByUserIdByCurrency(String userId, Currency currency);
+//
+////    @Query("{'userId' : {'$eq': ?0 }}")
+//    @Query(value="SELECT * FROM accounts where user_id=:userId")
+//    List<Account> findAccountByUserId(String userId);
+//
+////    @Query("{'balance' : {'$lt': 0 }}")
+//    @Query(value="SELECT * FROM accounts WHERE balance < 0")
+//    List<Account> getAccountsOverdraft();
 }
