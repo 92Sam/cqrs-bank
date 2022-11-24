@@ -30,8 +30,8 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     @Autowired
     AccountPostgresRepository accountPostgresRepository;
 
-    @Autowired
-    AccountMongoRepository accountMongoRepository;
+//    @Autowired
+//    AccountMongoRepository accountMongoRepository;
 
     @Autowired
     AccountKafkaProducerEvent accountKafkaProducerEvent;
@@ -39,11 +39,9 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     private static Logger log = LogManager.getLogger(AccountCommandServiceImpl.class);
 
     @Override
-    public Account createAccountFromBroker(UserCreateEventMessageDTO user) {
+    public Account createAccountFromUser(UserCreateEventMessageDTO user) {
         try {
             Account account = new Account();
-//            account.setUserId(user.getUserId());
-            // UserResDTO
 
             account.setUser(UserMapper.userMapper.userResDTOtoUser(user.getUserId()));
             account.setAccountStatus(AccountStatus.ENABLED);
@@ -55,73 +53,93 @@ public class AccountCommandServiceImpl implements AccountCommandService {
             account.setBalance(user.getInitialDepositAccountDTO().getAmount());
             account.setCreatedAt(LocalDateTime.now());
 
-            Account res = accountMongoRepository.save(account);
+            // TODO: Projector
+//            Account res = accountMongoRepository.save(account);
 
-            Account accountStoredpsql = accountPostgresRepository.save(account);
+            Account res = accountPostgresRepository.save(account);
 
-            accountKafkaProducerEvent.sendMessage(res);
+//
+
+            //TODO: Removing
+//            accountKafkaProducerEvent.sendMessage(res);
 
             return res;
         } catch (Exception e) {
-            log.debug("[reciever][createFromBroker] Cannot Create Account: ", e);
+            log.debug("[reciever][createAccountFromUser] Cannot Create Account: ", e);
         }
         return null;
     }
 
-    @Override
-    public Account getUserBalance(String userId) {
-        return null;
-    }
+    // TODO: Moving Logic to Query ACCOUNT
+//    @Override
+//    public Account getUserBalance(String userId) {
+//        return null;
+//    }
 
-    @Override
-    public List<Account> getAccountsByUserId(String userId) {
-        try {
+    // TODO: Moving Logic to Query ACCOUNT
+//    @Override
+//    public List<Account> getAccountsByUserId(String userId) {
+//        try {
+//
+////            List<Account> res = accountMongoRepository.findAccountByUserId(userId);
+//            List<Account> res = accountPostgresRepository.findAccountByUserId(userId);
+//
+//            return res;
+//
+//        } catch (Exception e) {
+//            log.error("[reciever][getAccountsByUserId] Cannot Create Account: ", e);
+//        }
+//        return null;
+//    }
 
-            List<Account> res = accountMongoRepository.findAccountByUserId(userId);
-            return res;
-
-        } catch (Exception e) {
-            log.error("[reciever][createFromBroker] Cannot Create Account: ", e);
-        }
-        return null;
-    }
-
-    @Override
-    public Account getAccountByUserIdByCurrency(String userId, Currency currency) {
-        try {
-
-            Account res = accountMongoRepository.findAccountByUserIdByCurrency(userId, currency);
-            return res;
-        } catch (Exception e) {
-            log.debug("[getAccountByUserIdByCurrency] Cannot get Account: ", e);
-        }
-        return null;
-    }
+    // TODO: Moving Logic to Query ACCOUNT
+//    @Override
+//    public Account getAccountByUserIdByCurrency(String userId, Currency currency) {
+//        try {
+//
+//            Account res = accountMongoRepository.findAccountByUserIdByCurrency(userId, currency);
+////            Account res = accountPostgresRepository.findAccountByUserIdByCurrency(userId, currency.toString());
+//
+//            return res;
+//        } catch (Exception e) {
+//            log.debug("[getAccountByUserIdByCurrency] Cannot get Account: ", e);
+//        }
+//        return null;
+//    }
 
     @Override
     public Account updateAccountBalanceByTransaction(Transaction transaction) {
 
-        Optional<Account> account = accountMongoRepository.findById(transaction.getAccount().getId());
-        if (account.isEmpty()){
-            log.info("Error the account not exist ");
-            return null;
+//        Optional<Account> account = accountMongoRepository.findById(transaction.getAccount().getId().toString());
+        try {
+            log.info("updateAccountBalanceByTransaction() ");
+            Optional<Account> account = accountPostgresRepository.findById(transaction.getAccount().getId());
+            if (account.isEmpty()){
+                log.info("Error the account not exist ");
+                return null;
+            }
+
+            // Evaluate Credits
+            Account accountBalance = AccountUtils.calculateBalanceAndCreditAvailable(account.get(), transaction);
+            if (accountBalance == null){
+                log.info("Not have balance enough");
+                return null;
+            }
+
+            log.info("Transaction {}", accountBalance.toString());
+
+            return this.updateAccountBalance(accountBalance);
+        }catch (Error error){
+            log.info("Transaction {}", error.toString());
         }
-
-        // Evaluate Credits
-        Account accountBalance = AccountUtils.calculateBalanceAndCreditAvailable(account.get(), transaction);
-        if (accountBalance == null){
-            log.info("Not have balance enough");
-            return null;
-        }
-
-        log.info("Transaction {}", accountBalance.toString());
-
-        return this.updateAccountBalance(accountBalance);
+        return null;
     }
 
     private Account updateAccountBalance(Account account) {
         try {
-            Account res = accountMongoRepository.save(account);
+//            Account res = accountMongoRepository.save(account);
+            Account res = accountPostgresRepository.save(account);
+
             return res;
         } catch (Exception e){
             log.error("[updateAccountBalance] Cannot update Account: ", e);
@@ -132,7 +150,9 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     @Override
     public Boolean verifyAccountCurrencyBalance(String accountId, Currency currency, Float amount) {
         try {
-            Optional<Account> res = accountMongoRepository.findById(accountId);
+//            Optional<Account> res = accountMongoRepository.findById(accountId);
+            Optional<Account> res = accountPostgresRepository.findById(accountId);
+
             Float totalAvailable =  res.get().getBalance()+res.get().getCreditAvailable();
             if(totalAvailable>=amount){
                 return true;

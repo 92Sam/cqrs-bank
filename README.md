@@ -16,6 +16,7 @@
 - Postman
 - Make
 - Maven
+- Debezium Sink Connector (PGSQL Connector)
 
 ### How Execute the project locally
 

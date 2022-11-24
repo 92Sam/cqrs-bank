@@ -36,9 +36,6 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     private AccountPostgresRepository accountPostgresRepository;
 
     @Autowired
-    private TransactionMongoRepository transactionMongoRepository;
-
-    @Autowired
     private AccountCommandServiceImpl accountCommandServiceImpl;
 
     @Autowired
@@ -50,7 +47,7 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
     public TransactionResDTO create(TransactionReqDTO transactionReq) throws Exception {
         try {
             Optional<Account> account = accountPostgresRepository.findById(transactionReq.getAccountId());
-            if (account.isEmpty()){
+            if (account.isEmpty()) {
                 throw new Exception(ACCOUNT_NOT_EXIST.toString());
             }
 
@@ -58,21 +55,21 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
             transaction.setAccount(account.get());
             transaction.setAmount(transactionReq.getAmount());
             transaction.setTransactionTypeByAmount(transactionReq.getAmount());
-            transaction.setTitle("Init Deposit Account");
-    //        transaction.setDescription(transactionReq.getDescription().orElse(null));
-            transaction.setCreatedAt(new Date());
+            transaction.setTitle(transactionReq.getTitle());
+            transaction.setDescription(transactionReq.getDescription());
 
+            //TODO: Fixing Recursion
             Account accountBalance = accountCommandServiceImpl.updateAccountBalanceByTransaction(transaction);
             if(accountBalance == null){
                 throw new Exception(ACCOUNT_ERROR_UPDATED_BALANCE.toString());
             }
 
-            transactionMongoRepository.save(transaction);
+//            transactionMongoRepository.save(transaction);
             transactionPostgresRepository.save(transaction);
 
-            transactionEventKafkaProducer.sendMessage(transaction);
+//            transactionEventKafkaProducer.sendMessage(transaction);
             return TransactionMapper.transactionMapper.transactionToTransactionResDTO(transaction);
-        }catch ( Error error ){
+        } catch (Error error) {
             log.error("Error on create {}", error);
         }
         return null;
@@ -80,7 +77,7 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
 
     @Override
     public List<TransactionResDTO> initializeAccount(Account account) {
-        try{
+        try {
 
             Transaction transactionDeposit = new Transaction();
             transactionDeposit.setAccount(account);
@@ -89,12 +86,12 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
             transactionDeposit.setTitle("Initialize Project");
             transactionDeposit.setCreatedAt(new Date());
 
-            List<Transaction> transactionList= Arrays.asList(transactionDeposit);
+            List<Transaction> transactionList = Arrays.asList(transactionDeposit);
 
-            List<Transaction> transactions = transactionMongoRepository.insert(transactionList);
+//            List<Transaction> transactions = transactionMongoRepository.insert(transactionList);
             List<Transaction> transactionsPsql = transactionPostgresRepository.saveAll(transactionList);
 
-            return transactions.stream().map(transaction ->{
+            return transactionsPsql.stream().map(transaction -> {
                 TransactionResDTO transactionResDTO = new TransactionResDTO();
                 transactionResDTO.setId(transaction.getId());
                 transactionResDTO.setAmount(transaction.getAmount());
@@ -102,7 +99,7 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
                 transactionResDTO.setTitle(transaction.getTitle());
                 return transactionResDTO;
             }).collect(Collectors.toList());
-        } catch (Error error){
+        } catch (Error error) {
             log.error("Error on initializeAccount", error);
         }
         return null;

@@ -28,8 +28,8 @@ public class MongoDBSinkKafkaConsumerEvent {
         }
     }
 
-    @Autowired
-    AccountCommandServiceImpl accountCommandServiceImpl;
+//    @Autowired
+//    AccountCommandServiceImpl accountCommandServiceImpl;
     @Autowired
     Gson gson = new Gson();
     Logger log = LogManager.getLogger(MongoDBSinkKafkaConsumerEvent.class);
