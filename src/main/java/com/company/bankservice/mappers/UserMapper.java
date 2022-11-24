@@ -11,8 +11,9 @@ public interface UserMapper {
     UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     User userReqDTOtoUser(UserReqDTO userReqDTO);
-    UserResDTO userToUserResDTO(User user);
 
+    User userResDTOtoUser(UserResDTO userResDTO);
+    UserResDTO userToUserResDTO(User user);
 
     UserLoginResDTO userToUserLoginResDTO(User user);
 }

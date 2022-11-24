@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 public class AccountResDTO {
     private String id;
-    private String userId;
+    private UserResDTO userId;
     private CreditLine creditLineId;
     private String accountNumber;
     private Currency currency;

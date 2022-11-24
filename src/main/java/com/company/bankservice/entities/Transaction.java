@@ -7,7 +7,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -30,10 +33,12 @@ public class Transaction {
     @Column(name = "id", nullable = false)
     private String id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "account_id_ID")
+    @ManyToOne
+    @JoinColumn(name = "account_id")
     @NonNull
-    private String accountId;
+    @DocumentReference(lazy = true)
+    @Field("accountId")
+    private Account account;
 
     @Enumerated(EnumType.STRING)
     @NonNull

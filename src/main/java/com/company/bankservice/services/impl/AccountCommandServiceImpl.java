@@ -8,6 +8,8 @@ import com.company.bankservice.enums.AccountStatus;
 import com.company.bankservice.enums.CreditLine;
 import com.company.bankservice.enums.Currency;
 import com.company.bankservice.events.AccountKafkaProducerEvent;
+import com.company.bankservice.mappers.UserMapper;
+import com.company.bankservice.mappers.UserMapperImpl;
 import com.company.bankservice.repositories.mongo.AccountMongoRepository;
 import com.company.bankservice.repositories.pgsql.AccountPostgresRepository;
 import com.company.bankservice.repositories.pgsql.UserPostgresRepository;
@@ -40,7 +42,10 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     public Account createAccountFromBroker(UserCreateEventMessageDTO user) {
         try {
             Account account = new Account();
-            account.setUserId(user.getUserId());
+//            account.setUserId(user.getUserId());
+            // UserResDTO
+
+            account.setUser(UserMapper.userMapper.userResDTOtoUser(user.getUserId()));
             account.setAccountStatus(AccountStatus.ENABLED);
             account.setAccountNumber(AccountUtils.generateString());
             account.setCreditLineId(CreditLine.CREDIT_BASIC);
@@ -96,7 +101,7 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     @Override
     public Account updateAccountBalanceByTransaction(Transaction transaction) {
 
-        Optional<Account> account = accountMongoRepository.findById(transaction.getAccountId());
+        Optional<Account> account = accountMongoRepository.findById(transaction.getAccount().getId());
         if (account.isEmpty()){
             log.info("Error the account not exist ");
             return null;
