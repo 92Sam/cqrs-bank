@@ -30,41 +30,42 @@ make run_container
 
 ### Structure Directories
 ``` 
+.
+├── command
 ├── infra
 │   ├── app_service
+│   ├── debezium_config
 │   └── pgsql_conf
+├── query
 └── src
-    ├── main
-    │   ├── java
-    │   │   └── com
-    │   │       └── company
-    │   │           └── bankservice
-    │   │               ├── config
-    │   │               ├── dto
-    │   │               │   ├── events
-    │   │               │   └── resolvers
-    │   │               ├── entities
-    │   │               ├── enums
-    │   │               │   └── errors
-    │   │               ├── events
-    │   │               ├── mappers
-    │   │               ├── repositories
-    │   │               │   └── impl
-    │   │               ├── resolvers
-    │   │               │   ├── command
-    │   │               │   └── query
-    │   │               ├── services
-    │   │               │   └── impl
-    │   │               └── utils
-    │   └── resources
-    │       ├── doc
-    │       └── graphql
-    └── test
-        └── java
-            └── com
-                └── company
-                    └── bankservice
-                    └── graphql
+    └── main
+        ├── java
+        │   └── com
+        │       └── company
+        │           └── bankservice
+        │               ├── config
+        │               ├── dto
+        │               │   ├── events
+        │               │   └── resolvers
+        │               ├── entities
+        │               ├── enums
+        │               │   └── errors
+        │               ├── events
+        │               ├── mappers
+        │               ├── repositories
+        │               │   ├── impl
+        │               │   ├── mongo
+        │               │   └── pgsql
+        │               ├── resolvers
+        │               │   ├── command
+        │               │   └── query
+        │               ├── services
+        │               │   └── impl
+        │               └── utils
+        └── resources
+            ├── doc
+            └── graphql
+
 ```
 
 
