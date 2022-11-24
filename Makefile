@@ -4,6 +4,10 @@ include .env
 run_app:
 	mvn spring-boot:run
 
+# App Actions
+run_app_debug:
+	mvn -Dmaven.surefire.debug spring-boot:run
+
 clean_app:
 	mvn clean spring-boot:repackage
 
@@ -11,8 +15,11 @@ compile_app:
 	mvn package
 
 # Containers Actions
+run_container_services_app: \
+	containers_build containers_run execute_debezium_config
+
 run_container_services: \
-	containers_build containers_run
+	containers_run execute_debezium_config
 
 containers_run:
 	docker-compose \
@@ -28,7 +35,8 @@ containers_down:
 
 containers_restart: \
 	containers_down \
-	containers_run
+	containers_run \
+	execute_debezium_config
 
 containers_build:
 	docker-compose \
@@ -40,5 +48,8 @@ containers_build:
 show:
 	echo "Test ->" ${HOST} \
 
-removing-images-test:
+removing_images_test:
 	docker images | grep "none" | awk '{print $3}' | xargs docker rmi
+
+execute_debezium_config:
+	/bin/bash ${PWD}/infra/debezium_config/debezium_postgres_connect.sh

@@ -7,6 +7,8 @@ psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
   create extension if not exists "pg_trgm";
   create extension if not exists "uuid-ossp";
   select * FROM pg_extension;
+
+#  ALTER SYSTEM SET wal_level = logical;
 EOSQL
 echo "Extensions enabled."
 echo "Waiting for postgres to stop..."

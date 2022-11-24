@@ -8,6 +8,7 @@ import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.enums.errors.UserError;
 import com.company.bankservice.events.UserKafkaProducerEvent;
+import com.company.bankservice.mappers.UserMapper;
 import com.company.bankservice.repositories.impl.UserPostgrestRepositoryImpl;
 import com.company.bankservice.repositories.mongo.UserMongoRepository;
 import com.company.bankservice.repositories.pgsql.UserPostgresRepository;
@@ -57,7 +58,10 @@ public class UserCommandServiceImpl implements UserCommandService {
             User userStoredpsql = userPostgresRepository.save(user);
 
             UserCreateEventMessageDTO userCreateEventMessageDTO = new UserCreateEventMessageDTO();
-            userCreateEventMessageDTO.setUserId(userStored.getId());
+
+//            userCreateEventMessageDTO.setUserId(userStored.getId());
+            userCreateEventMessageDTO.setUserId(UserMapper.userMapper.userToUserResDTO(userStored));
+
             userCreateEventMessageDTO.generateInitialDepositAccountDTO();
 
             //Mapping UserResDTO
@@ -99,10 +103,12 @@ public class UserCommandServiceImpl implements UserCommandService {
 
             //Mapping UserCreateEventMessageDTO
             UserCreateEventMessageDTO userCreateEventMessageDTO = new UserCreateEventMessageDTO();
-            userCreateEventMessageDTO.setUserId(userStored.getId());
+
+//            userCreateEventMessageDTO.setUserId(userStored.getId());
+            userCreateEventMessageDTO.setUserId(UserMapper.userMapper.userToUserResDTO(userStored));
             userCreateEventMessageDTO.setInitialDepositAccountDTO(userDepositAccountReqDTO.getInitialDeposit());
 
-            userEventKafkaProducer.sendMessage(userCreateEventMessageDTO);
+//            userEventKafkaProducer.sendMessage(userCreateEventMessageDTO);
 
             //Mapping UserResDTO
             UserResDTO userResDTO = new UserResDTO();
