@@ -36,7 +36,6 @@ make run_container
 │   ├── app_service
 │   ├── debezium_config
 │   └── pgsql_conf
-├── query
 └── src
     └── main
         ├── java
