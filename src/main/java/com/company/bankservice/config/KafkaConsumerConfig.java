@@ -94,4 +94,26 @@ public class KafkaConsumerConfig {
         factory.setConsumerFactory(accountConsumerFactory());
         return factory;
     }
+
+    public ConsumerFactory<String, Object>  sinkConsumerFactory() {
+        Map<String, Object> config = configProps();
+        config.put(
+                ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+                StringDeserializer.class);
+        config.put(
+                ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+                StringDeserializer.class);
+
+        return new DefaultKafkaConsumerFactory<>(config);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, Object> sinkListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConcurrency(10);
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
+        factory.getContainerProperties().setSyncCommits(true);
+        factory.setConsumerFactory(sinkConsumerFactory());
+        return factory;
+    }
 }
