@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 //@EnableTransactionManagement(proxyTargetClass = true)
-@EnableJpaRepositories(basePackages = "com.company.bankservice.repositories.pgslq")
+@EnableJpaRepositories(basePackages = "com.company.bankservice.repositories.pgsql")
 @EntityScan(basePackages = "com.company.bankservice.entities")
 public class JpaConfig {
 
