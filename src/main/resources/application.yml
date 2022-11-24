@@ -22,9 +22,12 @@ spring:
         group: ${KAFKA_GROUP:data_sink}
         topics:
             transactions: "transactions"
+            transactions_sink: "cqrs-bank-psql.public.transactions"
             accounts: "accounts"
+            accounts_sink: "cqrs-bank-psql.public.accounts"
             users: "users"
-            mongo_sink: "mongo_sink"
+            users_sink: "cqrs-bank-psql.public.users"
+            mongo_sink: "cqrs-bank-psql.public.*"
         max:
             poll: 50
             interval: 300000

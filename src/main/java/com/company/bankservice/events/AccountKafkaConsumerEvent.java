@@ -12,8 +12,8 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-@EnableKafka
-@Service
+//@EnableKafka
+//@Service
 public class AccountKafkaConsumerEvent {
 
     @Autowired
@@ -30,7 +30,7 @@ public class AccountKafkaConsumerEvent {
         if ( message == null ) return;
         log.info("[User] Message: {}", message.getUserId());
         try {
-            accountCommandServiceImpl.createAccountFromBroker(message);
+//            accountCommandServiceImpl.createAccountFromBroker(message);
             acknowledgment.acknowledge();
         } catch (Exception e) {
             log.error("[User][Exception] Error on Message.", e);

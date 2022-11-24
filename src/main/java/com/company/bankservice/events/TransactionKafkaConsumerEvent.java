@@ -12,8 +12,8 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-@EnableKafka
-@Service
+//@EnableKafka
+//@Service
 public class TransactionKafkaConsumerEvent {
 
     @Autowired

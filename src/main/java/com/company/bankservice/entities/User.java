@@ -3,8 +3,9 @@ package com.company.bankservice.entities;
 import com.company.bankservice.enums.UserStatus;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,9 +26,15 @@ import java.util.UUID;
 @Entity(name = "users")
 public class User {
 
-    @javax.persistence.Id
-    @Column(name = "id", nullable = false)
-    private String id;
+    @Id
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @Indexed(unique = true)
     private String email;

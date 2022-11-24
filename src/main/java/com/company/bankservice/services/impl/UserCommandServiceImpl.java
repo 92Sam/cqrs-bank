@@ -4,6 +4,7 @@ import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
 import com.company.bankservice.dto.resolvers.UserDepositAccountReqDTO;
 import com.company.bankservice.dto.resolvers.UserReqDTO;
 import com.company.bankservice.dto.resolvers.UserResDTO;
+import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.enums.errors.UserError;
@@ -29,18 +30,33 @@ public class UserCommandServiceImpl implements UserCommandService {
     UserPostgresRepository userPostgresRepository;
 
     @Autowired
-    UserMongoRepository userMongoRepository;
-
-    @Autowired
     UserKafkaProducerEvent userEventKafkaProducer;
 
+    @Autowired
+    AccountCommandServiceImpl accountCommandServiceImpl;
+
+    @Autowired
+    TransactionCommandServiceImpl transactionCommandServiceImpl;
+
     private static Logger log = LogManager.getLogger(UserCommandServiceImpl.class);
+
+    private Boolean verifyIfUserExist(String email) {
+         try{
+             User verifyUser = userPostgresRepository.findByEmail(email);
+             if (verifyUser != null) {
+                 return true;
+             }
+         }catch (Error error){
+             log.info("Error: {}", UserError.USER_ALREADY_EXIST.toString());
+         }
+         return false;
+    }
 
     @Override
     public UserResDTO create(UserReqDTO userReqDTO) {
         try {
-            User verifyUser = userMongoRepository.findByEmail(userReqDTO.getEmail());
-            if (verifyUser != null) {
+//            User verifyUser = userMongoRepository.findByEmail(userReqDTO.getEmail());
+            if (verifyIfUserExist(userReqDTO.getEmail())){
                 log.info("Error: {}", UserError.USER_ALREADY_EXIST.toString());
                 return null;
             }
@@ -53,9 +69,9 @@ public class UserCommandServiceImpl implements UserCommandService {
             user.setCreatedAt(new Date());
 
             // Produce Store the User
-            User userStored = userMongoRepository.save(user);
+//            User userStored = userMongoRepository.save(user);
 
-            User userStoredpsql = userPostgresRepository.save(user);
+            User userStored = userPostgresRepository.save(user);
 
             UserCreateEventMessageDTO userCreateEventMessageDTO = new UserCreateEventMessageDTO();
 
@@ -82,8 +98,7 @@ public class UserCommandServiceImpl implements UserCommandService {
     @Override
     public UserResDTO createUserDepositAccount(UserDepositAccountReqDTO userDepositAccountReqDTO) {
         try {
-            User verifyUser = userMongoRepository.findByEmail(userDepositAccountReqDTO.getEmail());
-            if (verifyUser != null) {
+            if (verifyIfUserExist(userDepositAccountReqDTO.getEmail())){
                 log.info("Error: {}", UserError.USER_ALREADY_EXIST.toString());
                 return null;
             }
@@ -97,18 +112,18 @@ public class UserCommandServiceImpl implements UserCommandService {
             user.setUserStatus(UserStatus.ENABLED);
             user.setCreatedAt(new Date());
 
-            User userStored = userMongoRepository.save(user);
-
-            User userStoredpsql = userPostgresRepository.save(user);
+//            User userStored = userMongoRepository.save(user);
+            User userStored = userPostgresRepository.save(user);
 
             //Mapping UserCreateEventMessageDTO
             UserCreateEventMessageDTO userCreateEventMessageDTO = new UserCreateEventMessageDTO();
-
-//            userCreateEventMessageDTO.setUserId(userStored.getId());
             userCreateEventMessageDTO.setUserId(UserMapper.userMapper.userToUserResDTO(userStored));
             userCreateEventMessageDTO.setInitialDepositAccountDTO(userDepositAccountReqDTO.getInitialDeposit());
 
 //            userEventKafkaProducer.sendMessage(userCreateEventMessageDTO);
+
+            Account account = accountCommandServiceImpl.createAccountFromUser(userCreateEventMessageDTO);
+            transactionCommandServiceImpl.initializeAccount(account);
 
             //Mapping UserResDTO
             UserResDTO userResDTO = new UserResDTO();

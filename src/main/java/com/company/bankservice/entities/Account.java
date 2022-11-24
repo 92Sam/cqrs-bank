@@ -6,6 +6,8 @@ import com.company.bankservice.enums.Currency;
 import lombok.*;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
@@ -14,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -23,11 +26,16 @@ import java.time.LocalDateTime;
 @Entity(name = "accounts")
 @Document(collection = "accounts")
 public class Account {
-//    @Id
-//    private String id;
-    @javax.persistence.Id
-    @Column(name = "id", nullable = false)
-    private String id;
+
+    @Id
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

@@ -9,13 +9,13 @@ import com.company.bankservice.enums.Currency;
 import java.util.List;
 
 public interface AccountCommandService {
-    Account createAccountFromBroker(UserCreateEventMessageDTO userCreateEventMessageDTO);
+    Account createAccountFromUser(UserCreateEventMessageDTO userCreateEventMessageDTO);
 
-    Account getUserBalance(String userId);
+//    Account getUserBalance(String userId);
 
-    List<Account> getAccountsByUserId(String userId);
+//    List<Account> getAccountsByUserId(String userId);
 
-    Account getAccountByUserIdByCurrency(String userId, Currency currency);
+//    Account getAccountByUserIdByCurrency(String userId, Currency currency);
 
     Account updateAccountBalanceByTransaction(Transaction transaction);
 

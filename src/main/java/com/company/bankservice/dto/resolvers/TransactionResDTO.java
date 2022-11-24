@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionResDTO {
-    private String id;
+    private UUID id;
     private String accountId;
     private TransactionType transactionType;
     private Float amount;

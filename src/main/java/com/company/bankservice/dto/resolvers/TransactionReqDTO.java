@@ -7,12 +7,13 @@ import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Validated
 public class TransactionReqDTO {
-    private String accountId;
+    private UUID accountId;
     private TransactionType transactionType;
     private Float amount;
     private String title;
