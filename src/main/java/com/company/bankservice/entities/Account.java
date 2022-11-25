@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -23,8 +24,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity(name = "accounts")
 @Document(collection = "accounts")
+@Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
@@ -43,7 +45,7 @@ public class Account {
     @Field("userId")
     private User user;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private CreditLine creditLineId;
 
     private String accountNumber;
@@ -53,6 +55,7 @@ public class Account {
 
     private Float balance;
 
+    @Column(name = "creditAvailable")
     private Float creditAvailable;
 
     private Float creditAmount;
@@ -61,8 +64,8 @@ public class Account {
     private AccountStatus accountStatus;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 }

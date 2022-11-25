@@ -3,16 +3,12 @@ package com.company.bankservice.services.impl;
 import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
-import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.AccountStatus;
 import com.company.bankservice.enums.CreditLine;
 import com.company.bankservice.enums.Currency;
 import com.company.bankservice.events.AccountKafkaProducerEvent;
 import com.company.bankservice.mappers.UserMapper;
-import com.company.bankservice.mappers.UserMapperImpl;
-import com.company.bankservice.repositories.mongo.AccountMongoRepository;
 import com.company.bankservice.repositories.pgsql.AccountPostgresRepository;
-import com.company.bankservice.repositories.pgsql.UserPostgresRepository;
 import com.company.bankservice.services.AccountCommandService;
 import com.company.bankservice.utils.AccountUtils;
 import org.apache.logging.log4j.LogManager;
@@ -20,8 +16,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,17 +45,8 @@ public class AccountCommandServiceImpl implements AccountCommandService {
             account.setCreditAvailable(CreditLine.CREDIT_BASIC.getCreditValue());
             account.setCurrency(user.getInitialDepositAccountDTO().getCurrency());
             account.setBalance(user.getInitialDepositAccountDTO().getAmount());
-            account.setCreatedAt(LocalDateTime.now());
-
-            // TODO: Projector
-//            Account res = accountMongoRepository.save(account);
 
             Account res = accountPostgresRepository.save(account);
-
-//
-
-            //TODO: Removing
-//            accountKafkaProducerEvent.sendMessage(res);
 
             return res;
         } catch (Exception e) {
@@ -70,47 +55,10 @@ public class AccountCommandServiceImpl implements AccountCommandService {
         return null;
     }
 
-    // TODO: Moving Logic to Query ACCOUNT
-//    @Override
-//    public Account getUserBalance(String userId) {
-//        return null;
-//    }
-
-    // TODO: Moving Logic to Query ACCOUNT
-//    @Override
-//    public List<Account> getAccountsByUserId(String userId) {
-//        try {
-//
-////            List<Account> res = accountMongoRepository.findAccountByUserId(userId);
-//            List<Account> res = accountPostgresRepository.findAccountByUserId(userId);
-//
-//            return res;
-//
-//        } catch (Exception e) {
-//            log.error("[reciever][getAccountsByUserId] Cannot Create Account: ", e);
-//        }
-//        return null;
-//    }
-
-    // TODO: Moving Logic to Query ACCOUNT
-//    @Override
-//    public Account getAccountByUserIdByCurrency(String userId, Currency currency) {
-//        try {
-//
-//            Account res = accountMongoRepository.findAccountByUserIdByCurrency(userId, currency);
-////            Account res = accountPostgresRepository.findAccountByUserIdByCurrency(userId, currency.toString());
-//
-//            return res;
-//        } catch (Exception e) {
-//            log.debug("[getAccountByUserIdByCurrency] Cannot get Account: ", e);
-//        }
-//        return null;
-//    }
 
     @Override
     public Account updateAccountBalanceByTransaction(Transaction transaction) {
 
-//        Optional<Account> account = accountMongoRepository.findById(transaction.getAccount().getId().toString());
         try {
             log.info("updateAccountBalanceByTransaction() ");
             Optional<Account> account = accountPostgresRepository.findById(transaction.getAccount().getId());

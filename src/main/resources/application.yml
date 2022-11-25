@@ -17,6 +17,8 @@ spring:
         hibernate:
             ddl-auto: update
             show-sql: true
+
+
     kafka:
         server: ${KAFKA_CLIENT_HOST:localhost}:${KAFKA_CLIENT_PORT:9092}
         group: ${KAFKA_GROUP:data_sink}
