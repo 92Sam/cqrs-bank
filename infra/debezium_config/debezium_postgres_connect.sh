@@ -12,7 +12,7 @@ DB_PGSQL_PASSWORD=root123456
 
 echo "Waiting to applying changes to Debezium Server"
 
-sleep 15
+sleep 22
 
 curl -X POST ${HOST_DEBEZIUM}/connectors \
   -H 'Content-Type: application/json' \
