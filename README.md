@@ -23,7 +23,7 @@
 1) Configure .env file variables
 2) Execute the following command
 ```makefile
-make run_container
+make run_container_services_app
 ```
 
 ##Graphql Endpoints Postman
@@ -32,40 +32,44 @@ make run_container
 ### Structure Directories
 ``` 
 .
-├── command
 ├── infra
 │   ├── app_service
 │   ├── debezium_config
 │   └── pgsql_conf
 └── src
-    └── main
-        ├── java
-        │   └── com
-        │       └── company
-        │           └── bankservice
-        │               ├── config
-        │               ├── dto
-        │               │   ├── events
-        │               │   └── resolvers
-        │               ├── entities
-        │               ├── enums
-        │               │   └── errors
-        │               ├── events
-        │               ├── mappers
-        │               ├── repositories
-        │               │   ├── impl
-        │               │   ├── mongo
-        │               │   └── pgsql
-        │               ├── resolvers
-        │               │   ├── command
-        │               │   └── query
-        │               ├── services
-        │               │   └── impl
-        │               └── utils
-        └── resources
-            ├── doc
-            └── graphql
-
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── company
+    │   │           └── bankservice
+    │   │               ├── config
+    │   │               ├── dto
+    │   │               │   ├── events
+    │   │               │   └── resolvers
+    │   │               ├── entities
+    │   │               ├── enums
+    │   │               │   └── errors
+    │   │               ├── events
+    │   │               ├── mappers
+    │   │               ├── projections
+    │   │               ├── repositories
+    │   │               │   ├── impl
+    │   │               │   ├── mongo
+    │   │               │   └── pgsql
+    │   │               ├── resolvers
+    │   │               │   ├── command
+    │   │               │   └── query
+    │   │               ├── services
+    │   │               │   └── impl
+    │   │               └── utils
+    │   └── resources
+    │       ├── doc
+    │       └── graphql
+    └── test
+        └── java
+            └── com
+                └── company
+                    └── bankservice
 ```
 
 

@@ -5,6 +5,7 @@ import com.company.bankservice.entities.Transaction;
 import com.company.bankservice.enums.OperationType;
 import com.company.bankservice.enums.TransactionType;
 import com.company.bankservice.repositories.mongo.TransactionMongoRepository;
+import com.company.bankservice.utils.DateTimeUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -55,8 +56,8 @@ public class TransactionQueryProjection {
             transaction.setDescription(description);
         }
         transaction.setTransactionType(TransactionType.valueOf(data.get("transaction_type").getAsString()));
-        transaction.setCreatedAt(new Date(data.get("created_at").getAsLong()));
-        transaction.setUpdatedAt(new Date(data.get("updated_at").getAsLong()));
+        transaction.setCreatedAt(DateTimeUtils.unixToDate(data.get("created_at").getAsLong()));
+        transaction.setUpdatedAt(DateTimeUtils.unixToDate(data.get("updated_at").getAsLong()));
         return transaction;
     }
 

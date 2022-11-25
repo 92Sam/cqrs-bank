@@ -18,6 +18,7 @@ public interface TransactionMapper {
 
     TransactionResDTO transactionToTransactionResDTO(Transaction transaction);
 
+    @Mapping(target="accountId", source="accountId")
     List<TransactionResDTO> transactionListToTransactionResDTOList(List<Transaction>  transaction);
 
 }

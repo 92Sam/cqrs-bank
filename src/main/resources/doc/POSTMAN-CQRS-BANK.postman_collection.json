@@ -23,8 +23,8 @@
 										"body": {
 											"mode": "graphql",
 											"graphql": {
-												"query": "mutation addTransaction ($input: TransactionInput) {\n    addTransaction (input: $input) {\n        accountId\n        transactionType\n        amount\n        title\n        description\n    }\n}",
-												"variables": "{\n  \"input\": {\n    \"accountId\": \"6373ba6a6cd188784f7adfef\",\n    \"amount\": -120,\n    \"description\": \"test pay\",\n    \"title\": \"test231\",\n    \"transactionType\": \"DEBIT\"\n  }\n}"
+												"query": "mutation addTransaction ($input: TransactionInput) {\n    addTransaction (input: $input) {\n            amount\n            createdAt\n            description\n            id\n            title\n            transactionType\n            updatedAt\n    }\n    \n}",
+												"variables": "{\n  \"input\": {\n    \"accountId\": \"9b15d6aa-63cc-4076-8f33-7f20c3a6697a\",\n    \"amount\": -10,\n    \"description\": \"test pay\",\n    \"title\": \"test231\",\n    \"transactionType\": \"DEBIT\"\n  }\n}"
 											}
 										},
 										"url": {
@@ -47,7 +47,7 @@
 										"body": {
 											"mode": "graphql",
 											"graphql": {
-												"query": "query{\n    getTransactionList {\n        accountId\n        amount\n        createdAt\n        description\n        id\n        title\n        transactionType\n        createdAt\n        updatedAt\n    }\n}",
+												"query": "query{\n    getTransactionList {\n        amount\n        createdAt\n        description\n        id\n        title\n        transactionType\n        createdAt\n        updatedAt\n    }\n}",
 												"variables": ""
 											}
 										},
@@ -71,8 +71,8 @@
 										"body": {
 											"mode": "graphql",
 											"graphql": {
-												"query": "query getTransactionsByDateRange ($input: TransactionsHistoricInput) {\n    getTransactionsByDateRange (input: $input) {\n        accountId\n        amount\n        createdAt\n        description\n        id\n        title\n        transactionType\n        createdAt\n        updatedAt\n    }\n}",
-												"variables": "{\n  \"input\": {\n    \"dateFrom\": \"2022-11-13T11:45:38.996Z\",\n    \"dateTo\": \"2022-11-17T11:45:38.996Z\"\n  }\n}"
+												"query": "query getTransactionsByDateRange ($input: TransactionsHistoricInput) {\n    getTransactionsByDateRange (input: $input) {\n        amount\n        createdAt\n        description\n        id\n        title\n        transactionType\n        createdAt\n        updatedAt\n    }\n}",
+												"variables": "{\n  \"input\": {\n    \"dateFrom\": \"2022-11-13T11:45:38.996Z\",\n    \"dateTo\": \"2022-11-30T11:45:38.996Z\"\n  }\n}"
 											}
 										},
 										"url": {
@@ -95,8 +95,8 @@
 										"body": {
 											"mode": "graphql",
 											"graphql": {
-												"query": "query getTransactionsByAccountIdByDateRange ($input: TransactionsAccountHistoricInput) {\n    getTransactionsByAccountIdByDateRange (input: $input) {\n        accountId\n        amount\n        createdAt\n        description\n        id\n        title\n        transactionType\n        createdAt\n        updatedAt\n    }\n}",
-												"variables": "{\n  \"input\": {\n    \"accountId\": \"6373be5e376da1076e740468\",\n    \"dateFrom\": \"2022-11-13T11:45:38.996Z\",\n    \"dateTo\": \"2022-11-16T11:45:38.996Z\"\n  }\n}"
+												"query": "query getTransactionsByAccountIdByDateRange ($input: TransactionsAccountHistoricInput) {\n    getTransactionsByAccountIdByDateRange (input: $input) {\n        amount\n        createdAt\n        description\n        id\n        title\n        transactionType\n        createdAt\n        updatedAt\n    }\n}",
+												"variables": "{\n  \"input\": {\n    \"accountId\": \"6375805ad033cd368e1349d3\",\n    \"dateFrom\": \"2022-11-13T11:45:38.996Z\",\n    \"dateTo\": \"2022-11-18T11:45:38.996Z\"\n  }\n}"
 											}
 										},
 										"url": {
@@ -125,7 +125,7 @@
 											"mode": "graphql",
 											"graphql": {
 												"query": "query ($email: String!, $password: String!){\n    login(email: $email, password: $password){\n        id\n        token\n    }\n}",
-												"variables": "{\n    \"email\":\"usertfdfest@ashjdkahsk.com\",\n    \"password\": \"123456\"\n}"
+												"variables": "{\n    \"email\":\"asdsadsad@gmail.com\",\n    \"password\": \"123456\"\n}"
 											}
 										},
 										"url": {
@@ -149,7 +149,7 @@
 											"mode": "graphql",
 											"graphql": {
 												"query": "mutation createUser ($input: UserInput!) {\n    createUser (input: $input) {\n        id\n        email\n        name\n        userStatus\n        createdAt\n    }\n}",
-												"variables": "{\n  \"input\": {\n    \"email\": \"test@gmail.com\",\n    \"name\": \"Sam Test\",\n    \"password\": \"123456\"\n  }\n}"
+												"variables": "{\n  \"input\": {\n    \"email\": \"71lasojfgfgfghdggfggfgggas@gmail.com\",\n    \"name\": \"Sam Test\",\n    \"password\": \"123456\"\n  }\n}"
 											}
 										},
 										"url": {
@@ -173,7 +173,7 @@
 											"mode": "graphql",
 											"graphql": {
 												"query": "mutation createUserDepositAccount ($input: UserAccountInput!) {\n    createUserDepositAccount (input: $input) {\n        id\n        email\n        name\n        userStatus\n        createdAt\n    }\n}",
-												"variables": "{\n  \"input\": {\n    \"email\": \"test@gmail.com\",\n    \"name\": \"ASDASDASDAS\",\n    \"password\": \"123456\",\n    \"initialDeposit\": {\n      \"amount\": \"180\",\n      \"currency\": \"USD\"\n    }\n  }\n}"
+												"variables": "{\n  \"input\": {\n    \"email\": \"asdasddsa@gmail.com\",\n    \"name\": \"ASDASDASDAS\",\n    \"password\": \"123456\",\n    \"initialDeposit\": {\n      \"amount\": \"100\",\n      \"currency\": \"USD\"\n    }\n  }\n}"
 											}
 										},
 										"url": {
@@ -201,8 +201,8 @@
 										"body": {
 											"mode": "graphql",
 											"graphql": {
-												"query": "query getAccountsUser($userId: ID!){\n    getAccountsUser(userId: $userId) {\n        id\n        accountNumber\n        currency\n        creditAvailable\n        creditAmount\n        creditLineId\n        statusAccount\n        currency\n        createdAt\n    }\n}",
-												"variables": "{\n   \"userId\":\"6375004037c91d77f56eb3ba\" \n}"
+												"query": "query getAccountsUser($userId: ID!){\n    getAccountsUser(userId: $userId) {\n        id\n        accountNumber\n        balance\n        currency\n        creditAvailable\n        creditAmount\n        creditLineId\n        statusAccount\n        currency\n        createdAt\n    }\n}",
+												"variables": "{\n   \"userId\":\"5379761b-d873-4ddc-b234-fbe82735c556\" \n}"
 											}
 										},
 										"url": {
@@ -225,7 +225,7 @@
 										"body": {
 											"mode": "graphql",
 											"graphql": {
-												"query": "query{\n    getAccountsOverdraft {\n        id\n        userId\n        accountNumber\n        currency\n        creditAvailable\n        creditAmount\n        creditLineId\n        statusAccount\n        currency\n        createdAt\n    }\n}",
+												"query": "query{\n    getAccountsOverdraft {\n        id\n        accountNumber\n        balance\n        currency\n        creditAvailable\n        creditAmount\n        creditLineId\n        statusAccount\n        currency\n        createdAt\n    }\n}",
 												"variables": ""
 											}
 										},

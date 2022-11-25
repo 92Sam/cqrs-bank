@@ -7,6 +7,7 @@ import com.company.bankservice.enums.CreditLine;
 import com.company.bankservice.enums.Currency;
 import com.company.bankservice.enums.OperationType;
 import com.company.bankservice.repositories.mongo.AccountMongoRepository;
+import com.company.bankservice.utils.DateTimeUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -52,8 +53,8 @@ public class AccountQueryProjection {
         account.setCreditAvailable(data.get("credit_available").getAsFloat());
         account.setCreditLineId(CreditLine.valueOf(data.get("credit_line_id").getAsString()));
         account.setCurrency(Currency.valueOf(data.get("currency").getAsString()));
-        account.setUpdatedAt(new Date(data.get("updated_at").getAsLong()));
-        account.setCreatedAt(new Date(data.get("created_at").getAsLong()));
+        account.setUpdatedAt(DateTimeUtils.unixToDate(data.get("updated_at").getAsLong()));
+        account.setCreatedAt(DateTimeUtils.unixToDate(data.get("created_at").getAsLong()));
         return account;
     }
 
