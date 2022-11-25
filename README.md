@@ -43,7 +43,6 @@ make run_container_services_app
     │   │       └── company
     │   │           └── bankservice
     │   │               ├── config
-    │   │               │   └── dto
     │   │               ├── dto
     │   │               │   ├── events
     │   │               │   └── resolvers
