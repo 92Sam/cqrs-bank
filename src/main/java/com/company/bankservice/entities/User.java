@@ -36,7 +36,7 @@ public class User {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(name = "id", updatable = false, nullable = false)
-    @Field("_id")
+//    @Field("_id")
     private UUID id;
 
     @Indexed(unique = true)

@@ -1,7 +1,6 @@
 package com.company.bankservice.projections;
 
 import com.company.bankservice.entities.Account;
-import com.company.bankservice.entities.Transaction;
 import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.AccountStatus;
 import com.company.bankservice.enums.CreditLine;
@@ -10,7 +9,6 @@ import com.company.bankservice.enums.OperationType;
 import com.company.bankservice.repositories.mongo.AccountMongoRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,8 +29,6 @@ public class AccountQueryProjection {
     private Logger log = LogManager.getLogger(AccountQueryProjection.class);
 
     public void projection(String operation, JsonObject payload){
-        log.info("[ETL AccountQueryProjection] Message: {}", operation);
-        log.info("[ETL AccountQueryProjection] Message: {}", payload);
         if (operation.equals(OperationType.CREATE.getValue())) {
             createAccount(mapperProjection(payload.getAsJsonObject("after")));
         } else if (operation.equals(OperationType.UPDATE.getValue())) {
@@ -43,7 +39,11 @@ public class AccountQueryProjection {
     }
 
     private Account mapperProjection(JsonObject data) {
+        User user = new User();
+        user.setId(UUID.fromString(data.get("user_id").getAsString()));
+
         Account account = new Account();
+        account.setUser(user);
         account.setId(UUID.fromString(data.get("id").getAsString()));
         account.setAccountNumber(data.get("account_number").getAsString());
         account.setAccountStatus(AccountStatus.valueOf(data.get("account_status").getAsString()));

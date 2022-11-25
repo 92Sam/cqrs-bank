@@ -27,16 +27,12 @@ public class TransactionQueryProjection {
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public void projection(String operation, JsonObject payload){
-        log.info("[ETL TransactionQueryProjection] Message: {}", operation);
-        log.info("[ETL TransactionQueryProjection] Message: {}", payload);
         if (operation.equals(OperationType.CREATE.getValue())) {
             createTransaction(mapperProjection(payload.getAsJsonObject("after")));
-//            createTransaction(gson.fromJson(payload.get("after"), Transaction.class));
-
         } else if (operation.equals(OperationType.UPDATE.getValue())) {
-            updateTransaction(gson.fromJson(payload.get("after"), Transaction.class));
+            updateTransaction(mapperProjection(payload.getAsJsonObject("after")));
         } else if (operation.equals(OperationType.DELETE.getValue())) {
-            deleteTransaction(gson.fromJson(payload.get("before"), Transaction.class));
+            updateTransaction(mapperProjection(payload.getAsJsonObject("before")));
         }
     }
 

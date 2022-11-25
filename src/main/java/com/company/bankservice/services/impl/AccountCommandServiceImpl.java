@@ -3,16 +3,12 @@ package com.company.bankservice.services.impl;
 import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
-import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.AccountStatus;
 import com.company.bankservice.enums.CreditLine;
 import com.company.bankservice.enums.Currency;
 import com.company.bankservice.events.AccountKafkaProducerEvent;
 import com.company.bankservice.mappers.UserMapper;
-import com.company.bankservice.mappers.UserMapperImpl;
-import com.company.bankservice.repositories.mongo.AccountMongoRepository;
 import com.company.bankservice.repositories.pgsql.AccountPostgresRepository;
-import com.company.bankservice.repositories.pgsql.UserPostgresRepository;
 import com.company.bankservice.services.AccountCommandService;
 import com.company.bankservice.utils.AccountUtils;
 import org.apache.logging.log4j.LogManager;
@@ -20,8 +16,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service

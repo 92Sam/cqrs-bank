@@ -28,8 +28,6 @@ public class UserQueryProjection {
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public void projection(String operation, JsonObject payload){
-        log.info("[ETL UserQueryProjection] Message: {}", operation);
-        log.info("[ETL UserQueryProjection] Message: {}", payload);
         if (operation.equals(OperationType.CREATE.getValue())) {
             createUser(mapperProjection(payload.getAsJsonObject("after")));
         } else if (operation.equals(OperationType.UPDATE.getValue())) {
