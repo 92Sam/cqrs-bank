@@ -2,6 +2,10 @@ package com.company.bankservice.projections;
 
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
+import com.company.bankservice.entities.User;
+import com.company.bankservice.enums.AccountStatus;
+import com.company.bankservice.enums.CreditLine;
+import com.company.bankservice.enums.Currency;
 import com.company.bankservice.enums.OperationType;
 import com.company.bankservice.repositories.mongo.AccountMongoRepository;
 import com.google.gson.Gson;
@@ -12,6 +16,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class AccountQueryProjection {
@@ -27,12 +34,27 @@ public class AccountQueryProjection {
         log.info("[ETL AccountQueryProjection] Message: {}", operation);
         log.info("[ETL AccountQueryProjection] Message: {}", payload);
         if (operation.equals(OperationType.CREATE.getValue())) {
-            createAccount(gson.fromJson(payload.get("after"), Account.class));
+            createAccount(mapperProjection(payload.getAsJsonObject("after")));
         } else if (operation.equals(OperationType.UPDATE.getValue())) {
-            updateAccount(gson.fromJson(payload.get("after"), Account.class));
+            updateAccount(mapperProjection(payload.getAsJsonObject("after")));
         } else if (operation.equals(OperationType.DELETE.getValue())) {
-            deleteAccount(gson.fromJson(payload.get("before"), Account.class));
+            deleteAccount(mapperProjection(payload.getAsJsonObject("before")));
         }
+    }
+
+    private Account mapperProjection(JsonObject data) {
+        Account account = new Account();
+        account.setId(UUID.fromString(data.get("id").getAsString()));
+        account.setAccountNumber(data.get("account_number").getAsString());
+        account.setAccountStatus(AccountStatus.valueOf(data.get("account_status").getAsString()));
+        account.setBalance(data.get("balance").getAsFloat());
+        account.setCreditAmount(data.get("credit_amount").getAsFloat());
+        account.setCreditAvailable(data.get("credit_available").getAsFloat());
+        account.setCreditLineId(CreditLine.valueOf(data.get("credit_line_id").getAsString()));
+        account.setCurrency(Currency.valueOf(data.get("currency").getAsString()));
+        account.setUpdatedAt(new Date(data.get("updated_at").getAsLong()));
+        account.setCreatedAt(new Date(data.get("created_at").getAsLong()));
+        return account;
     }
 
     private void createAccount(Account account) {

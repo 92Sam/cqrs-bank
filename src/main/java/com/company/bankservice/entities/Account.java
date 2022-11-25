@@ -9,8 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -26,8 +24,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity(name = "accounts")
 @Document(collection = "accounts")
+@Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
@@ -41,12 +40,12 @@ public class Account {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     @DocumentReference(lazy = true)
     @Field("userId")
     private User user;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private CreditLine creditLineId;
 
     private String accountNumber;
@@ -56,6 +55,7 @@ public class Account {
 
     private Float balance;
 
+    @Column(name = "creditAvailable")
     private Float creditAvailable;
 
     private Float creditAmount;

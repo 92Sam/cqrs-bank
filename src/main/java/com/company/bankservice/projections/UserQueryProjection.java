@@ -1,7 +1,10 @@
 package com.company.bankservice.projections;
 
+import com.company.bankservice.entities.Account;
+import com.company.bankservice.entities.Transaction;
 import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.OperationType;
+import com.company.bankservice.enums.TransactionType;
 import com.company.bankservice.repositories.mongo.UserMongoRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,6 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class UserQueryProjection {
@@ -25,12 +31,23 @@ public class UserQueryProjection {
         log.info("[ETL UserQueryProjection] Message: {}", operation);
         log.info("[ETL UserQueryProjection] Message: {}", payload);
         if (operation.equals(OperationType.CREATE.getValue())) {
-            createUser(gson.fromJson(payload.get("after"), User.class));
+            createUser(mapperProjection(payload.getAsJsonObject("after")));
         } else if (operation.equals(OperationType.UPDATE.getValue())) {
-            updateUser(gson.fromJson(payload.get("after"), User.class));
+            updateUser(mapperProjection(payload.getAsJsonObject("after")));
         } else if (operation.equals(OperationType.DELETE.getValue())) {
-            deleteUser(gson.fromJson(payload.get("before"), User.class));
+            deleteUser(mapperProjection(payload.getAsJsonObject("before")));
         }
+    }
+
+    private User mapperProjection(JsonObject data) {
+        User user = new User();
+        user.setId(UUID.fromString(data.get("id").getAsString()));
+        user.setName(data.get("name").getAsString());
+        user.setEmail(data.get("email").getAsString());
+        user.setPassword(data.get("password").getAsString());
+        user.setCreatedAt(new Date(data.get("created_at").getAsLong()));
+        user.setUpdatedAt(new Date(data.get("updated_at").getAsLong()));
+        return user;
     }
 
     private void createUser(User user) {

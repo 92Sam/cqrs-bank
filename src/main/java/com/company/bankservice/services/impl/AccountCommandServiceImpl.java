@@ -52,15 +52,7 @@ public class AccountCommandServiceImpl implements AccountCommandService {
             account.setCurrency(user.getInitialDepositAccountDTO().getCurrency());
             account.setBalance(user.getInitialDepositAccountDTO().getAmount());
 
-            // TODO: Projector
-//            Account res = accountMongoRepository.save(account);
-
             Account res = accountPostgresRepository.save(account);
-
-//
-
-            //TODO: Removing
-//            accountKafkaProducerEvent.sendMessage(res);
 
             return res;
         } catch (Exception e) {
@@ -69,47 +61,10 @@ public class AccountCommandServiceImpl implements AccountCommandService {
         return null;
     }
 
-    // TODO: Moving Logic to Query ACCOUNT
-//    @Override
-//    public Account getUserBalance(String userId) {
-//        return null;
-//    }
-
-    // TODO: Moving Logic to Query ACCOUNT
-//    @Override
-//    public List<Account> getAccountsByUserId(String userId) {
-//        try {
-//
-////            List<Account> res = accountMongoRepository.findAccountByUserId(userId);
-//            List<Account> res = accountPostgresRepository.findAccountByUserId(userId);
-//
-//            return res;
-//
-//        } catch (Exception e) {
-//            log.error("[reciever][getAccountsByUserId] Cannot Create Account: ", e);
-//        }
-//        return null;
-//    }
-
-    // TODO: Moving Logic to Query ACCOUNT
-//    @Override
-//    public Account getAccountByUserIdByCurrency(String userId, Currency currency) {
-//        try {
-//
-//            Account res = accountMongoRepository.findAccountByUserIdByCurrency(userId, currency);
-////            Account res = accountPostgresRepository.findAccountByUserIdByCurrency(userId, currency.toString());
-//
-//            return res;
-//        } catch (Exception e) {
-//            log.debug("[getAccountByUserIdByCurrency] Cannot get Account: ", e);
-//        }
-//        return null;
-//    }
 
     @Override
     public Account updateAccountBalanceByTransaction(Transaction transaction) {
 
-//        Optional<Account> account = accountMongoRepository.findById(transaction.getAccount().getId().toString());
         try {
             log.info("updateAccountBalanceByTransaction() ");
             Optional<Account> account = accountPostgresRepository.findById(transaction.getAccount().getId());

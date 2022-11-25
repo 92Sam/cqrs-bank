@@ -7,8 +7,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -26,7 +24,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "transactions")
+@Entity
+@Table(name = "transactions")
 @Document(collection = "transactions")
 public class Transaction {
 
@@ -49,20 +48,26 @@ public class Transaction {
 
     @Enumerated(EnumType.STRING)
     @NonNull
+    @Field("transactionType")
     private TransactionType transactionType;
 
+    @Field("amount")
     private Float amount;
 
     @Nullable
+    @Field("title")
     private String title;
 
     @Nullable
+    @Field("description")
     private String description;
 
     @CreationTimestamp
+    @Field("createdAt")
     private Date createdAt;
 
     @UpdateTimestamp
+    @Field("updatedAt")
     private Date updatedAt;
 
     public void setTransactionTypeByAmount(Float amount){
