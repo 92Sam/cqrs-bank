@@ -53,7 +53,6 @@ make run_container_services_app
     │   │               ├── mappers
     │   │               ├── projections
     │   │               ├── repositories
-    │   │               │   ├── impl
     │   │               │   ├── mongo
     │   │               │   └── pgsql
     │   │               ├── resolvers
@@ -70,6 +69,7 @@ make run_container_services_app
             └── com
                 └── company
                     └── bankservice
+
 ```
 
 

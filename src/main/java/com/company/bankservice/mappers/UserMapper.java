@@ -1,7 +1,8 @@
 package com.company.bankservice.mappers;
 
-import com.company.bankservice.dto.resolvers.*;
-import com.company.bankservice.entities.Transaction;
+import com.company.bankservice.dto.resolvers.UserLoginResDTO;
+import com.company.bankservice.dto.resolvers.UserReqDTO;
+import com.company.bankservice.dto.resolvers.UserResDTO;
 import com.company.bankservice.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

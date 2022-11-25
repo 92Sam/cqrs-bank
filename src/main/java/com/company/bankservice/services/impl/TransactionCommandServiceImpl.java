@@ -4,11 +4,8 @@ import com.company.bankservice.dto.resolvers.TransactionReqDTO;
 import com.company.bankservice.dto.resolvers.TransactionResDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
-import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.TransactionType;
-import com.company.bankservice.events.TransactionKafkaProducerEvent;
 import com.company.bankservice.mappers.TransactionMapper;
-import com.company.bankservice.repositories.mongo.TransactionMongoRepository;
 import com.company.bankservice.repositories.pgsql.AccountPostgresRepository;
 import com.company.bankservice.repositories.pgsql.TransactionPostgresRepository;
 import com.company.bankservice.services.TransactionCommandService;
@@ -37,9 +34,6 @@ public class TransactionCommandServiceImpl implements TransactionCommandService 
 
     @Autowired
     private AccountCommandServiceImpl accountCommandServiceImpl;
-
-    @Autowired
-    private TransactionKafkaProducerEvent transactionEventKafkaProducer;
 
     private static Logger log = LogManager.getLogger(TransactionCommandServiceImpl.class);
 

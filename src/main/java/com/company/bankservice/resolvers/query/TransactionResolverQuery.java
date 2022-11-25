@@ -3,21 +3,14 @@ package com.company.bankservice.resolvers.query;
 import com.company.bankservice.dto.resolvers.TransactionResDTO;
 import com.company.bankservice.dto.resolvers.TransactionsAccountHistoricReqDTO;
 import com.company.bankservice.dto.resolvers.TransactionsHistoricReqDTO;
-import com.company.bankservice.entities.Transaction;
 import com.company.bankservice.services.impl.TransactionQueryServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Controller

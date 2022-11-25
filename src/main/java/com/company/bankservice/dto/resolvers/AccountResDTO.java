@@ -5,11 +5,7 @@ import com.company.bankservice.enums.CreditLine;
 import com.company.bankservice.enums.Currency;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter

@@ -1,15 +1,11 @@
 package com.company.bankservice.config;
 
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
 import com.company.bankservice.entities.Account;
-import com.company.bankservice.entities.User;
-import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.config.SslConfigs;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
