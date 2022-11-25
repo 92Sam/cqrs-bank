@@ -51,7 +51,6 @@ public class AccountCommandServiceImpl implements AccountCommandService {
             account.setCreditAvailable(CreditLine.CREDIT_BASIC.getCreditValue());
             account.setCurrency(user.getInitialDepositAccountDTO().getCurrency());
             account.setBalance(user.getInitialDepositAccountDTO().getAmount());
-            account.setCreatedAt(LocalDateTime.now());
 
             // TODO: Projector
 //            Account res = accountMongoRepository.save(account);

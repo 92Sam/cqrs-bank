@@ -1,9 +1,11 @@
 package com.company.bankservice.events;
 
-import com.company.bankservice.services.impl.AccountCommandServiceImpl;
+import com.company.bankservice.projections.AccountQueryProjection;
+import com.company.bankservice.projections.TransactionQueryProjection;
+import com.company.bankservice.projections.UserQueryProjection;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +19,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class MongoDBSinkKafkaConsumerEvent {
 
-    private enum ActionTypes {
-        UPDATE("u"),
-        CREATE("c"),
-        DELETE("d");
+    @Getter
+    private enum TableProjection {
+        ACCOUNTS("accounts"),
+        TRANSACTIONS("transactions"),
+        USERS("users");
 
-        private String toString;
-        ActionTypes(String type) {
-            this.toString = type;
+        private String value;
+        TableProjection(String type) {
+            this.value = type;
         }
     }
 
-//    @Autowired
-//    AccountCommandServiceImpl accountCommandServiceImpl;
+    @Autowired
+    UserQueryProjection userQueryProjection;
+    @Autowired
+    AccountQueryProjection accountQueryProjection;
+    @Autowired
+    TransactionQueryProjection transactionQueryProjection;
+
     @Autowired
     Gson gson = new Gson();
     Logger log = LogManager.getLogger(MongoDBSinkKafkaConsumerEvent.class);
@@ -53,21 +61,22 @@ public class MongoDBSinkKafkaConsumerEvent {
             String table =  source.get("table").getAsString();
             String nameQueue =  source.get("name").getAsString();
 
-            log.info("[ETL operation] Message: {}", operation);
-            log.info("[ETL table] Message: {}", table);
-            log.info("[ETL nameQueue] Message: {}", nameQueue);
-            log.info("[ETL payload] Message: {}", payload);
+//            log.info("[ETL operation] Message: {}", operation);
+//            log.info("[ETL table] Message: {}", table);
+//            log.info("[ETL nameQueue] Message: {}", nameQueue);
+//            log.info("[ETL payload] Message: {}", payload);
 
-            if (operation.equals(ActionTypes.UPDATE.toString)) {
-//                messageBrokerInputPort.updateReg(table, (Map<String, Object>) payload.get("after"));
-            } else if (operation.equals(ActionTypes.CREATE.toString)) {
-                log.info("[ETL payload] Message: {}", payload);
-//                messageBrokerInputPort.insertReg(table, (Map<String, Object>) payload.get("after"));
-            } else if (operation.equals(ActionTypes.CREATE.toString)) {
-//                messageBrokerInputPort.deleteReg(table, (Map<String, Object>) payload.get("before"));
+            if (table.equals(TableProjection.USERS.getValue())) {
+                log.info("[ETL USERS] Message: {}", payload);
+                userQueryProjection.projection(operation, payload);
+            } else if (table.equals(TableProjection.ACCOUNTS.getValue())) {
+                log.info("[ETL ACCOUNTS] Message: {}", payload);
+                accountQueryProjection.projection(operation, payload);
+            } else if (table.equals(TableProjection.TRANSACTIONS.getValue())) {
+                log.info("[ETL TRANSACTIONS] Message: {}", payload);
+                transactionQueryProjection.projection(operation, payload);
             }
 
-//            accountCommandServiceImpl.createAccountFromBroker(message);
             acknowledgment.acknowledge();
         } catch (Exception e) {
             log.error("[User][Exception] Error on Message.", e);

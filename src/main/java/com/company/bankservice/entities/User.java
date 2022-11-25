@@ -52,6 +52,4 @@ public class User {
     @UpdateTimestamp
     private Date updatedAt;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-//    private List<Account> accounts;
 }
