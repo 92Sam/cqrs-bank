@@ -1,22 +1,23 @@
 version: "3.8"
 
 services:
-#  cqrs-bank-service:
-#    container_name: "cqrs-bank-service_0.1"
-#    env_file:
-#      - .env
-#    build:
-#      context: .
-#      dockerfile: infra/app_service/Dockerfile
-#    ports:
-#      - ${APP_HTTP_PORT:-8081}:8080
-#    depends_on:
-#      - mongo-bank
-#      - postgres-bank
-#      - zookeeper-bank
-#      - kafka-bank
-#    networks:
-#      - bank_net
+  cqrs-bank-service:
+    container_name: "cqrs-bank-service_0.1"
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: infra/app_service/Dockerfile
+    ports:
+      - ${APP_HTTP_PORT:-8081}:8080
+    depends_on:
+      - mongo-bank
+      - postgres-bank
+      - zookeeper-bank
+      - kafka-bank
+      - debezium-bank
+    networks:
+      - bank_net
 
   mongo-bank:
     image: 'mongo:6.0.2'

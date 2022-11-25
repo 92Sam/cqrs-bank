@@ -5,7 +5,9 @@ import com.company.bankservice.entities.Transaction;
 import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.OperationType;
 import com.company.bankservice.enums.TransactionType;
+import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.repositories.mongo.UserMongoRepository;
+import com.company.bankservice.utils.DateTimeUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -42,9 +44,10 @@ public class UserQueryProjection {
         user.setId(UUID.fromString(data.get("id").getAsString()));
         user.setName(data.get("name").getAsString());
         user.setEmail(data.get("email").getAsString());
+        user.setUserStatus(UserStatus.valueOf(data.get("user_status").getAsString()));
         user.setPassword(data.get("password").getAsString());
-        user.setCreatedAt(new Date(data.get("created_at").getAsLong()));
-        user.setUpdatedAt(new Date(data.get("updated_at").getAsLong()));
+        user.setCreatedAt(DateTimeUtils.unixToDate(data.get("created_at").getAsLong()));
+        user.setUpdatedAt(DateTimeUtils.unixToDate(data.get("updated_at").getAsLong()));
         return user;
     }
 

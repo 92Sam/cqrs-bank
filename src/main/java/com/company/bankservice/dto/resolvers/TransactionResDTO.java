@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TransactionResDTO {
     private UUID id;
-    private String accountId;
+    private UUID accountId;
     private TransactionType transactionType;
     private Float amount;
     private String title;

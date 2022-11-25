@@ -10,8 +10,6 @@ import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.enums.errors.UserError;
 import com.company.bankservice.events.UserKafkaProducerEvent;
 import com.company.bankservice.mappers.UserMapper;
-import com.company.bankservice.repositories.impl.UserPostgrestRepositoryImpl;
-import com.company.bankservice.repositories.mongo.UserMongoRepository;
 import com.company.bankservice.repositories.pgsql.UserPostgresRepository;
 import com.company.bankservice.services.UserCommandService;
 import com.company.bankservice.utils.EncryptUtils;
@@ -21,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 public class UserCommandServiceImpl implements UserCommandService {
@@ -69,15 +66,10 @@ public class UserCommandServiceImpl implements UserCommandService {
             user.setCreatedAt(new Date());
 
             // Produce Store the User
-//            User userStored = userMongoRepository.save(user);
-
             User userStored = userPostgresRepository.save(user);
 
             UserCreateEventMessageDTO userCreateEventMessageDTO = new UserCreateEventMessageDTO();
-
-//            userCreateEventMessageDTO.setUserId(userStored.getId());
             userCreateEventMessageDTO.setUserId(UserMapper.userMapper.userToUserResDTO(userStored));
-
             userCreateEventMessageDTO.generateInitialDepositAccountDTO();
 
             //Mapping UserResDTO
@@ -112,15 +104,12 @@ public class UserCommandServiceImpl implements UserCommandService {
             user.setUserStatus(UserStatus.ENABLED);
             user.setCreatedAt(new Date());
 
-//            User userStored = userMongoRepository.save(user);
             User userStored = userPostgresRepository.save(user);
 
             //Mapping UserCreateEventMessageDTO
             UserCreateEventMessageDTO userCreateEventMessageDTO = new UserCreateEventMessageDTO();
             userCreateEventMessageDTO.setUserId(UserMapper.userMapper.userToUserResDTO(userStored));
             userCreateEventMessageDTO.setInitialDepositAccountDTO(userDepositAccountReqDTO.getInitialDeposit());
-
-//            userEventKafkaProducer.sendMessage(userCreateEventMessageDTO);
 
             Account account = accountCommandServiceImpl.createAccountFromUser(userCreateEventMessageDTO);
             transactionCommandServiceImpl.initializeAccount(account);
