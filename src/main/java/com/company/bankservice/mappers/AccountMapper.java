@@ -17,5 +17,5 @@ public interface AccountMapper {
     AccountResDTO accountToAccountResDTO(Account account);
     List<AccountResDTO> accountListToAccountResDTOList(List<Account>  accounts);
     Account userCreateEventMessageDTOtoAccount(UserCreateEventMessageDTO userCreateEventMessageDTO);
-    AccountCreateEventMessageDTO accountToAccountCreateEventMessageDTO(Account account);
+
 }

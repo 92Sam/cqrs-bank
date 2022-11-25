@@ -1,0 +1,40 @@
+.
+├── infra
+│   ├── app_service
+│   ├── debezium_config
+│   └── pgsql_conf
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── company
+    │   │           └── bankservice
+    │   │               ├── config
+    │   │               │   └── dto
+    │   │               │       ├── events
+    │   │               │       └── resolvers
+    │   │               ├── entities
+    │   │               ├── enums
+    │   │               │   └── errors
+    │   │               ├── events
+    │   │               ├── mappers
+    │   │               ├── projections
+    │   │               ├── repositories
+    │   │               │   ├── mongo
+    │   │               │   └── pgsql
+    │   │               ├── resolvers
+    │   │               │   ├── command
+    │   │               │   └── query
+    │   │               ├── services
+    │   │               │   └── impl
+    │   │               └── utils
+    │   └── resources
+    │       ├── doc
+    │       └── graphql
+    └── test
+        └── java
+            └── com
+                └── company
+                    └── bankservice
+
+37 directories
