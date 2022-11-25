@@ -1,14 +1,13 @@
 package com.company.bankservice.services.impl;
 
-import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
-import com.company.bankservice.dto.resolvers.UserDepositAccountReqDTO;
-import com.company.bankservice.dto.resolvers.UserReqDTO;
-import com.company.bankservice.dto.resolvers.UserResDTO;
+import com.company.bankservice.config.dto.events.UserCreateEventMessageDTO;
+import com.company.bankservice.config.dto.resolvers.UserDepositAccountReqDTO;
+import com.company.bankservice.config.dto.resolvers.UserReqDTO;
+import com.company.bankservice.config.dto.resolvers.UserResDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.enums.errors.UserError;
-import com.company.bankservice.events.UserKafkaProducerEvent;
 import com.company.bankservice.mappers.UserMapper;
 import com.company.bankservice.repositories.pgsql.UserPostgresRepository;
 import com.company.bankservice.services.UserCommandService;
@@ -25,9 +24,6 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     @Autowired
     UserPostgresRepository userPostgresRepository;
-
-    @Autowired
-    UserKafkaProducerEvent userEventKafkaProducer;
 
     @Autowired
     AccountCommandServiceImpl accountCommandServiceImpl;

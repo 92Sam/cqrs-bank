@@ -1,12 +1,11 @@
 package com.company.bankservice.services.impl;
 
-import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
+import com.company.bankservice.config.dto.events.UserCreateEventMessageDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
 import com.company.bankservice.enums.AccountStatus;
 import com.company.bankservice.enums.CreditLine;
 import com.company.bankservice.enums.Currency;
-import com.company.bankservice.events.AccountKafkaProducerEvent;
 import com.company.bankservice.mappers.UserMapper;
 import com.company.bankservice.repositories.pgsql.AccountPostgresRepository;
 import com.company.bankservice.services.AccountCommandService;
@@ -23,12 +22,6 @@ public class AccountCommandServiceImpl implements AccountCommandService {
 
     @Autowired
     AccountPostgresRepository accountPostgresRepository;
-
-//    @Autowired
-//    AccountMongoRepository accountMongoRepository;
-
-    @Autowired
-    AccountKafkaProducerEvent accountKafkaProducerEvent;
 
     private static Logger log = LogManager.getLogger(AccountCommandServiceImpl.class);
 
@@ -85,7 +78,6 @@ public class AccountCommandServiceImpl implements AccountCommandService {
 
     private Account updateAccountBalance(Account account) {
         try {
-//            Account res = accountMongoRepository.save(account);
             Account res = accountPostgresRepository.save(account);
 
             return res;
@@ -98,7 +90,6 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     @Override
     public Boolean verifyAccountCurrencyBalance(String accountId, Currency currency, Float amount) {
         try {
-//            Optional<Account> res = accountMongoRepository.findById(accountId);
             Optional<Account> res = accountPostgresRepository.findById(accountId);
 
             Float totalAvailable =  res.get().getBalance()+res.get().getCreditAvailable();

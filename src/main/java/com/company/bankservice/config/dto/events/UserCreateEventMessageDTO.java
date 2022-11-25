@@ -1,7 +1,7 @@
-package com.company.bankservice.dto.events;
+package com.company.bankservice.config.dto.events;
 
-import com.company.bankservice.dto.resolvers.InitialDepositAccountDTO;
-import com.company.bankservice.dto.resolvers.UserResDTO;
+import com.company.bankservice.config.dto.resolvers.InitialDepositAccountDTO;
+import com.company.bankservice.config.dto.resolvers.UserResDTO;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -61,11 +61,6 @@ public class MongoDBSinkKafkaConsumerEvent {
             String table =  source.get("table").getAsString();
             String nameQueue =  source.get("name").getAsString();
 
-//            log.info("[ETL operation] Message: {}", operation);
-//            log.info("[ETL table] Message: {}", table);
-//            log.info("[ETL nameQueue] Message: {}", nameQueue);
-//            log.info("[ETL payload] Message: {}", payload);
-
             if (table.equals(TableProjection.USERS.getValue())) {
                 log.info("[ETL USERS] Message: {}", payload);
                 userQueryProjection.projection(operation, payload);

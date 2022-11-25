@@ -1,6 +1,5 @@
-package com.company.bankservice.dto.resolvers;
+package com.company.bankservice.config.dto.resolvers;
 
-import com.company.bankservice.enums.Currency;
 import lombok.Getter;
 import lombok.Setter;
 

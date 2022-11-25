@@ -1,8 +1,6 @@
 package com.company.bankservice.services;
 
-import com.company.bankservice.dto.resolvers.AccountResDTO;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
+import com.company.bankservice.config.dto.resolvers.AccountResDTO;
 
 import java.util.List;
 

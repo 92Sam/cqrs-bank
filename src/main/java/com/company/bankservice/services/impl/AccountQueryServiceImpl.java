@@ -1,6 +1,6 @@
 package com.company.bankservice.services.impl;
 
-import com.company.bankservice.dto.resolvers.AccountResDTO;
+import com.company.bankservice.config.dto.resolvers.AccountResDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.mappers.AccountMapper;
 import com.company.bankservice.repositories.mongo.AccountMongoRepository;

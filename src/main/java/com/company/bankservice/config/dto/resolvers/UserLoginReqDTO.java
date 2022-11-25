@@ -1,4 +1,4 @@
-package com.company.bankservice.dto.resolvers;
+package com.company.bankservice.config.dto.resolvers;
 import lombok.Getter;
 import lombok.Setter;
 

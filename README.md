@@ -43,9 +43,9 @@ make run_container_services_app
     │   │       └── company
     │   │           └── bankservice
     │   │               ├── config
-    │   │               ├── dto
-    │   │               │   ├── events
-    │   │               │   └── resolvers
+    │   │               │   └── dto
+    │   │               │       ├── events
+    │   │               │       └── resolvers
     │   │               ├── entities
     │   │               ├── enums
     │   │               │   └── errors
@@ -53,7 +53,6 @@ make run_container_services_app
     │   │               ├── mappers
     │   │               ├── projections
     │   │               ├── repositories
-    │   │               │   ├── impl
     │   │               │   ├── mongo
     │   │               │   └── pgsql
     │   │               ├── resolvers

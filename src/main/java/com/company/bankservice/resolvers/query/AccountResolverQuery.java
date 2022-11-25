@@ -1,15 +1,12 @@
 package com.company.bankservice.resolvers.query;
 
-import com.company.bankservice.dto.resolvers.AccountResDTO;
-import com.company.bankservice.services.AccountQueryService;
+import com.company.bankservice.config.dto.resolvers.AccountResDTO;
 import com.company.bankservice.services.impl.AccountQueryServiceImpl;
-import com.company.bankservice.services.impl.TransactionCommandServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;

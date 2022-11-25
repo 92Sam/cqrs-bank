@@ -1,8 +1,8 @@
 package com.company.bankservice.resolvers.command;
 
 import com.company.bankservice.services.impl.TransactionCommandServiceImpl;
-import com.company.bankservice.dto.resolvers.TransactionReqDTO;
-import com.company.bankservice.dto.resolvers.TransactionResDTO;
+import com.company.bankservice.config.dto.resolvers.TransactionReqDTO;
+import com.company.bankservice.config.dto.resolvers.TransactionResDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
