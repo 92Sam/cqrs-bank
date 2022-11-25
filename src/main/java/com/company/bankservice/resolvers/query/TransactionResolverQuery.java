@@ -1,8 +1,8 @@
 package com.company.bankservice.resolvers.query;
 
-import com.company.bankservice.config.dto.resolvers.TransactionResDTO;
-import com.company.bankservice.config.dto.resolvers.TransactionsAccountHistoricReqDTO;
-import com.company.bankservice.config.dto.resolvers.TransactionsHistoricReqDTO;
+import com.company.bankservice.dto.resolvers.TransactionResDTO;
+import com.company.bankservice.dto.resolvers.TransactionsAccountHistoricReqDTO;
+import com.company.bankservice.dto.resolvers.TransactionsHistoricReqDTO;
 import com.company.bankservice.services.impl.TransactionQueryServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

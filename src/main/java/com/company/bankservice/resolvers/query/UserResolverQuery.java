@@ -1,5 +1,5 @@
 package com.company.bankservice.resolvers.query;
-import com.company.bankservice.config.dto.resolvers.UserLoginResDTO;
+import com.company.bankservice.dto.resolvers.UserLoginResDTO;
 import com.company.bankservice.services.impl.UserQueryServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

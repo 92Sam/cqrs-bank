@@ -1,7 +1,7 @@
 package com.company.bankservice.resolvers.command;
-import com.company.bankservice.config.dto.resolvers.UserDepositAccountReqDTO;
-import com.company.bankservice.config.dto.resolvers.UserReqDTO;
-import com.company.bankservice.config.dto.resolvers.UserResDTO;
+import com.company.bankservice.dto.resolvers.UserDepositAccountReqDTO;
+import com.company.bankservice.dto.resolvers.UserReqDTO;
+import com.company.bankservice.dto.resolvers.UserResDTO;
 import com.company.bankservice.services.impl.UserCommandServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -3,7 +3,7 @@ package com.company.bankservice.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.company.bankservice.config.dto.events.UserCreateEventMessageDTO;
+import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
 import com.company.bankservice.entities.Account;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

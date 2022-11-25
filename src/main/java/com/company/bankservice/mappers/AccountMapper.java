@@ -1,8 +1,8 @@
 package com.company.bankservice.mappers;
 
-import com.company.bankservice.config.dto.events.UserCreateEventMessageDTO;
-import com.company.bankservice.config.dto.resolvers.AccountReqDTO;
-import com.company.bankservice.config.dto.resolvers.AccountResDTO;
+import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
+import com.company.bankservice.dto.resolvers.AccountReqDTO;
+import com.company.bankservice.dto.resolvers.AccountResDTO;
 import com.company.bankservice.entities.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

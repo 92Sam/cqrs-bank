@@ -11,8 +11,9 @@
     │   │           └── bankservice
     │   │               ├── config
     │   │               │   └── dto
-    │   │               │       ├── events
-    │   │               │       └── resolvers
+    │   │               ├── dto
+    │   │               │   ├── events
+    │   │               │   └── resolvers
     │   │               ├── entities
     │   │               ├── enums
     │   │               │   └── errors
@@ -37,4 +38,4 @@
                 └── company
                     └── bankservice
 
-37 directories
+38 directories

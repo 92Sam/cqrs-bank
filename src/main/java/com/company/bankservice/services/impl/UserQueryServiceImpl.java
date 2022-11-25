@@ -1,6 +1,6 @@
 package com.company.bankservice.services.impl;
 
-import com.company.bankservice.config.dto.resolvers.UserLoginResDTO;
+import com.company.bankservice.dto.resolvers.UserLoginResDTO;
 import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.UserStatus;
 import com.company.bankservice.enums.errors.UserError;

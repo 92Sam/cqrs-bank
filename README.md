@@ -44,8 +44,9 @@ make run_container_services_app
     │   │           └── bankservice
     │   │               ├── config
     │   │               │   └── dto
-    │   │               │       ├── events
-    │   │               │       └── resolvers
+    │   │               ├── dto
+    │   │               │   ├── events
+    │   │               │   └── resolvers
     │   │               ├── entities
     │   │               ├── enums
     │   │               │   └── errors
@@ -69,6 +70,7 @@ make run_container_services_app
             └── com
                 └── company
                     └── bankservice
+
 ```
 
 

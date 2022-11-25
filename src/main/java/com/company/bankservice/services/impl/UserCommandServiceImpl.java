@@ -1,9 +1,9 @@
 package com.company.bankservice.services.impl;
 
-import com.company.bankservice.config.dto.events.UserCreateEventMessageDTO;
-import com.company.bankservice.config.dto.resolvers.UserDepositAccountReqDTO;
-import com.company.bankservice.config.dto.resolvers.UserReqDTO;
-import com.company.bankservice.config.dto.resolvers.UserResDTO;
+import com.company.bankservice.dto.events.UserCreateEventMessageDTO;
+import com.company.bankservice.dto.resolvers.UserDepositAccountReqDTO;
+import com.company.bankservice.dto.resolvers.UserReqDTO;
+import com.company.bankservice.dto.resolvers.UserResDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.User;
 import com.company.bankservice.enums.UserStatus;

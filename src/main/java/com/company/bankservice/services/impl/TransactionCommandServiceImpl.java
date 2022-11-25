@@ -1,7 +1,7 @@
 package com.company.bankservice.services.impl;
 
-import com.company.bankservice.config.dto.resolvers.TransactionReqDTO;
-import com.company.bankservice.config.dto.resolvers.TransactionResDTO;
+import com.company.bankservice.dto.resolvers.TransactionReqDTO;
+import com.company.bankservice.dto.resolvers.TransactionResDTO;
 import com.company.bankservice.entities.Account;
 import com.company.bankservice.entities.Transaction;
 import com.company.bankservice.enums.TransactionType;

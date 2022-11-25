@@ -1,8 +1,8 @@
 package com.company.bankservice.services.impl;
 
-import com.company.bankservice.config.dto.resolvers.TransactionResDTO;
-import com.company.bankservice.config.dto.resolvers.TransactionsAccountHistoricReqDTO;
-import com.company.bankservice.config.dto.resolvers.TransactionsHistoricReqDTO;
+import com.company.bankservice.dto.resolvers.TransactionResDTO;
+import com.company.bankservice.dto.resolvers.TransactionsAccountHistoricReqDTO;
+import com.company.bankservice.dto.resolvers.TransactionsHistoricReqDTO;
 import com.company.bankservice.entities.Transaction;
 import com.company.bankservice.mappers.TransactionMapper;
 import com.company.bankservice.repositories.mongo.TransactionMongoRepository;
